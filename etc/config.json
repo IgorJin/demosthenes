@@ -1,0 +1,5 @@
+{
+    "apiPrefix": "http://localhost:3001/api",
+    "port": "3001",
+    "db": "mongodb+srv://Igor:Igor@cluster0-g81fj.mongodb.net/test?retryWrites=true&w=majority"
+}
