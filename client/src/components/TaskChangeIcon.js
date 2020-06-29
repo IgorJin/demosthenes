@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 const TaskChangeIcon = ({type}) => {
     return (
         <span className={`changeTaskIcon changeTaskIcon__${type}`}></span>

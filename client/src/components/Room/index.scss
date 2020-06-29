@@ -1,0 +1,73 @@
+@import "../../variables.scss";
+
+.room {
+    &__inner {
+        display: flex;
+        &__main,
+        &__sub {
+          align-items: stretch;
+          align-content: stretch;
+        }
+        &__sub {
+          flex-grow: 0;
+        //   display: flex;
+        //   align-content: space-around;
+        //   flex-direction: column;
+        //   justify-content: space-between;
+            min-width: 50px;
+        }
+        &__main {
+          flex-grow: 1;
+          margin-right: 30px;
+          min-height: 200px;
+        }
+        &__item {
+          background-color: white;
+          box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+          border-radius: 4px;
+          height: 100%;
+
+        &__head,
+        &__body {
+          position: relative;
+          padding: 16px 24px;
+          &__show_more {
+            text-align: center;
+            span {
+              cursor: pointer;
+              font-weight: 600;
+              font-size: 13px;
+              line-height: 19px;
+              color: $blue;
+            }
+          }
+        }
+        }
+    }
+}
+
+.room_button {
+    display: inline-block;
+    &:not(:last-child) {margin-right: 20px;}
+
+    &__button {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 19px;
+        color: #FFFFFF;
+        box-shadow: 0px 4px 10px rgba(16, 156, 241, 0.24);
+        border-radius: 4px;
+        padding: 11px 34px;
+        cursor: pointer;
+        display: inline-block;
+        &--blue{
+            background: $blue;
+        }
+        &--yellow{
+            background: $yellow;
+        }
+        &--green{
+            background: $green;
+        }
+    }
+}

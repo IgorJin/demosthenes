@@ -1,5 +1,5 @@
-import React from './node_modules/react';
-const cn = require('./node_modules/classnames');
+import React from 'react';
+const cn = require('../../node_modules/classnames');
 
 const DateCarousel = ({dateArr, activeDay, onClick, today}) => {  
     const dayOfWeek = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat',]

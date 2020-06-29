@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 const ProgressBar = ({amountTasks, completedTasks}) => {
     const value = Math.ceil(completedTasks/amountTasks*100)
     return (

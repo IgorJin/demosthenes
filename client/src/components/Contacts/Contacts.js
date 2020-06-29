@@ -1,8 +1,8 @@
-import React from './node_modules/react';
-import ActionButton from './ActionButton'
-import Select from './Select'
-import Table from './Table'
-import lisa from '../images/lisa.svg'
+import React from 'react';
+import ActionButton from '../ActionButton'
+import Select from '../Select'
+import Table from '../Table'
+import lisa from './lisa.svg'
 
 const Contacts = () => {
     const data = [

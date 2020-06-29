@@ -1,5 +1,5 @@
-import React from './node_modules/react';
-import './node_modules/react-vis/dist/style.css';
+import React from 'react';
+import 'react-vis/dist/style.css';
 import {
     HorizontalGridLines,
     VerticalGridLines,
@@ -12,7 +12,7 @@ import {
     VerticalBarSeries,
     LineSeries,
     MarkSeries
-} from './node_modules/react-vis/distdules/react-vis';
+} from 'react-vis';
 
 const DealsGraph = () => {
     const gradient = (<GradientDefs>

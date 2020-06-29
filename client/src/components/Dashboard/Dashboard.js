@@ -1,12 +1,12 @@
-import React, {useState} from './node_modules/react';
-import Select from './Select'
-import Header from './Header'
-import DateCarousel from './DateCarousel'
-import TaskCard from './TaskCard'
-import ProgressBar from './ProgressBar'
+import React, {useState} from 'react';
+import Select from '../Select'
+import Header from '../Header'
+import DateCarousel from '../DateCarousel'
+import TaskCard from '../TaskCard'
+import ProgressBar from '../ProgressBar'
 import ava from './task.svg'
-import DealsGraph from './DealsGraph'
-import TasksArc from './TasksArc'
+import DealsGraph from '../DealsGraph'
+import TasksArc from '../TasksArc'
 
 Date.prototype.daysInMonth = function() {
     return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
@@ -38,7 +38,7 @@ const getDateArray = (d, period) => {
 
 const Dashboard = ({ data: {task} }) => {
     
-    task = !task ? defaultTasks : task;console.log(task[0].fullName)
+    task = !task ? defaultTasks : task;
     let dateArr = getDateArray(date, period);
     const [curDay, setCurDay] = useState(dateArr[0]);
     const [weekDay, setWeekDay] = useState(0);

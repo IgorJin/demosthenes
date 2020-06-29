@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 import Avatar from './Avatar';
 
 const Recipient = ({ name, image }) => {

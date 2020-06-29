@@ -1,7 +1,7 @@
-import React from './node_modules/react';
-import {XYPlot, ArcSeries, XAxis, YAxis} from './node_modules/react-vis/distdules/react-vis';
+import React from 'react';
+import {XYPlot, ArcSeries, XAxis, YAxis} from 'react-vis';
 import TaskChangeIcon from './TaskChangeIcon'
-const classNames = require('./node_modules/classnames');
+const classNames = require('classnames');
 
 const PI = Math.PI;
 

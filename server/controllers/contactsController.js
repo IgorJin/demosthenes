@@ -1,4 +1,4 @@
-const Contact = require('../models/contacts')
+const Contact = require('../models/Contacts')
 
 exports.addContact = async function(req,res) {
     const contact = new Contact({

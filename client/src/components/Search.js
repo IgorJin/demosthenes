@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 const Search = () => {
     return (
         <div className='search'>

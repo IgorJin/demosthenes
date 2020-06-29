@@ -1,5 +1,4 @@
-//const { wrap: async } = require('co');
-const Todo = require('../models/task')
+const Todo = require('../models/Task')
 
 exports.addTask = async function(req,res) {
     const card = new Todo({

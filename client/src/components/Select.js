@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 const Select = ({children, float}) => {
     return (
         <div className={`select ${float}`}>

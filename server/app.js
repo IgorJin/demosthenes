@@ -3,10 +3,10 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser     = require('body-parser');
 const contactsRouter = require('./routes/contacts')
-const tasksRouter = require('./routes/tasks') 
+const tasksRouter = require('./routes/tasks')
+const usersRouter = require('./routes/users')  
 const db = require('./db') 
 const config = require('../etc/config.json') 
-//const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
 })
 app.use('/api/tasks', tasksRouter)
 app.use('/api/contacts', contactsRouter)
-
+app.use('/api/users', usersRouter)
 db.setUpConnection();
 app.listen(config.port, () => console.log(`Example app listening at http://localhost:${config.port}`))

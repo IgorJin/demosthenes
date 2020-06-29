@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const Contact= require('./contacts')
+const Contact= require('./Contacts')
 
 const TaskSchema = new Schema({
     text: String,

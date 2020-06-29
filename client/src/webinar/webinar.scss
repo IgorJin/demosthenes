@@ -1,0 +1,14 @@
+@import '../variables.scss';
+.webinar-app{
+   background-color: #1f1f20;
+   height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex: 1;
+}
+.stream-chat{
+    width: 250px;
+    flex-grow: 0;
+}

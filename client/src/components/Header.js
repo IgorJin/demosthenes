@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 const Header = ({children}) => {
     return (
          <h2 className='header'>{children}</h2>
