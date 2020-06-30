@@ -7,8 +7,11 @@ const tasksRouter = require('./routes/tasks')
 const usersRouter = require('./routes/users')  
 const db = require('./db') 
 const config = require('../etc/config.json') 
+const socketio = require('socket.io');
 
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -21,4 +24,15 @@ app.use('/api/tasks', tasksRouter)
 app.use('/api/contacts', contactsRouter)
 app.use('/api/users', usersRouter)
 db.setUpConnection();
-app.listen(config.port, () => console.log(`Example app listening at http://localhost:${config.port}`))
+
+io.on('connection', (socket)=>{
+    console.log(`Socket ${socket.id} connected`);
+    io.emit('sendMessage', {user:'admin', message:`Welcome to room ${socket.id}`})
+    //socket.on('join', (user)=>socket.emit('join'), {message: ''})
+    //socket.broadcast.to()
+    socket.on('disconnect', () => {
+        console.log('disconnect');
+    })
+})
+
+server.listen(config.port, () => console.log(`Server listening at http://localhost:${config.port}`))

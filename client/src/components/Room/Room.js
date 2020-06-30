@@ -3,6 +3,7 @@ import RoomButton from './RoomButton';
 import Header from '../Header';
 import {comeWebinar} from '../../actions'
 import { connect } from 'react-redux'
+import {Link} from "react-router-dom";
 import './index.scss'
 const Room = ({comeInWebinar}) => {
     return (
@@ -12,8 +13,11 @@ const Room = ({comeInWebinar}) => {
                     <div className='room__inner__item'>
                         <div className='room__inner__item__head'>
                             <div>
-                                <RoomButton
-                                    color={'blue'} onClick={comeInWebinar}>Запустить вебинар</RoomButton>
+                                <Link to ='/webinar'>
+                                    <RoomButton
+                                        color={'blue'} onClick={comeInWebinar}>Запустить вебинар</RoomButton>
+                                </Link>
+                                
                                 <RoomButton
                                     color={'green'}>Запланировать вебинар</RoomButton> 
                             </div>

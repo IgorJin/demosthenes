@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Select from '../Select'
 import Header from '../Header'
 import DateCarousel from '../DateCarousel'
@@ -7,6 +7,7 @@ import ProgressBar from '../ProgressBar'
 import ava from './task.svg'
 import DealsGraph from '../DealsGraph'
 import TasksArc from '../TasksArc'
+import api from '../../services';
 
 Date.prototype.daysInMonth = function() {
     return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
@@ -36,15 +37,22 @@ const getDateArray = (d, period) => {
     return dateArr
 }
 
-const Dashboard = ({ data: {task} }) => {
-    
-    task = !task ? defaultTasks : task;
+const Dashboard = () => {
     let dateArr = getDateArray(date, period);
+    const [task, setTasks] = useState([])
     const [curDay, setCurDay] = useState(dateArr[0]);
     const [weekDay, setWeekDay] = useState(0);
     const [curMonth, setCurMonth] = useState(currentMonth);
     const amountTasks = 10;
     const completedTasks = 8;
+    
+    useEffect(()=>{
+        api.getTask().then((res)=> 
+          res.json()).then(d => {
+          console.log(d)
+          setTasks(d)
+        })
+      }, [])
 
     const setActiveDay = (d, i) => {
         setCurDay(d);

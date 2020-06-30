@@ -8,7 +8,23 @@
     display: flex;
     flex: 1;
 }
-.stream-chat{
+.stream-main{
+    width: 100%;
+    display: flex;
+}
+.stream-center{
+    flex-grow: 1;
+}
+.stream-chat-wrapper{
+    display: block;
+    float: right;
+    height: 100vh;
+    border: 1px solid white;
     width: 250px;
     flex-grow: 0;
+
+    & * {
+        color: white;
+    }
+    
 }
