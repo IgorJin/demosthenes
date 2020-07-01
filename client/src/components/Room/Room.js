@@ -5,7 +5,7 @@ import {comeWebinar} from '../../actions'
 import { connect } from 'react-redux'
 import {Link} from "react-router-dom";
 import './index.scss'
-const Room = ({comeInWebinar}) => {
+const Room = ({comeInWebinar, webinars}) => {
     return (
         <div className='room'>
             <div className='room__inner'>
@@ -24,7 +24,9 @@ const Room = ({comeInWebinar}) => {
                             <Header>Новые</Header>
                         </div>
                         <div className='room__inner__item__body'>
-                            
+                            {webinars.map((weninar, idx)=>(
+                                <div>{weninar.title}; by {weninar.host.displayName}</div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -48,7 +50,12 @@ const Room = ({comeInWebinar}) => {
    
 }
 
+webinars
+const mapStateToProps = state => ({
+    webinars: state.webinarReducer.webinars
+})
 const mapDispatchToProps = (dispatch) =>({
     comeInWebinar: () => dispatch(comeWebinar())
+    
 })
 export default connect(null, mapDispatchToProps)(Room);

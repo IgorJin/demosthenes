@@ -5,6 +5,7 @@ const bodyParser     = require('body-parser');
 const contactsRouter = require('./routes/contacts')
 const tasksRouter = require('./routes/tasks')
 const usersRouter = require('./routes/users')  
+const webinarRouter = require('./routes/webinarRoute')  
 const db = require('./db') 
 const config = require('../etc/config.json') 
 const socketio = require('socket.io');
@@ -23,6 +24,8 @@ app.get('/', (req, res) => {
 app.use('/api/tasks', tasksRouter)
 app.use('/api/contacts', contactsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/webinars', webinarRouter)
+
 db.setUpConnection();
 
 io.on('connection', (socket)=>{

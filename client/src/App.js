@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import profilelogo from './images/profile.svg';
 import './App.scss';
 import {
   Switch,
@@ -18,13 +17,11 @@ import Webinar from './Webinar/Comnponents';
 import routes from './routes'
 const cn = require('classnames');
 
-function App({isLoginIn, authPostFetch, onVebinar}) {
+function App({isLoginIn}) {
   const [sidebarState, setSidebarState] = useState(false)
-
   const toggleSidebar = () => {
     setSidebarState(!sidebarState)
   }
-  console.log(useRouteMatch('/webinar'))
   if (useRouteMatch('/webinar')) return <Webinar />
   return (
     <div className='App'>
@@ -59,8 +56,7 @@ function App({isLoginIn, authPostFetch, onVebinar}) {
 }
 
 const mapStateToProps = state => ({
-  isLoginIn: state.authReducer.isLogin,
-  onVebinar: state.webinarReducer.onVebinar
+  isLoginIn: state.authReducer.isLogin
 })
 
 export default connect(mapStateToProps)(App);
