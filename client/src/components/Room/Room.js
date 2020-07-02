@@ -24,7 +24,7 @@ const Room = ({comeInWebinar, webinars}) => {
                             <Header>Новые</Header>
                         </div>
                         <div className='room__inner__item__body'>
-                            {webinars.map((weninar, idx)=>(
+                            {webinars && webinars.map((weninar, idx)=>(
                                 <div>{weninar.title}; by {weninar.host.displayName}</div>
                             ))}
                         </div>
@@ -50,7 +50,6 @@ const Room = ({comeInWebinar, webinars}) => {
    
 }
 
-webinars
 const mapStateToProps = state => ({
     webinars: state.webinarReducer.webinars
 })
@@ -58,4 +57,4 @@ const mapDispatchToProps = (dispatch) =>({
     comeInWebinar: () => dispatch(comeWebinar())
     
 })
-export default connect(null, mapDispatchToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);
