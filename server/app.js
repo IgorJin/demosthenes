@@ -30,12 +30,16 @@ db.setUpConnection();
 
 io.on('connection', (socket)=>{
     console.log(`Socket ${socket.id} connected`);
-    io.emit('sendMessage', {user:'admin', message:`Welcome to room ${socket.id}`})
-    //socket.on('join', (user)=>socket.emit('join'), {message: ''})
+    io.emit('sendMessage', { user: 'admin', message: `Welcome to room ${socket.id}` })
+    socket.on('join', (room) => {
+        socket.join(room)
+        io.to(room).emit('NEW_USER', { name: 'CurrentUser join channel' })
+    })
     //socket.broadcast.to()
     socket.on('disconnect', () => {
         console.log('disconnect');
     })
+    
 })
 
 server.listen(config.port, () => console.log(`Server listening at http://localhost:${config.port}`))

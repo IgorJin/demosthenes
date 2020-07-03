@@ -69,9 +69,17 @@ export const webinarFetch = (id) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
-            if (data) {
-                fetch(`http://localhost:3001/api/webinars/${id}`, {
+            if (data.id) {
+                    console.log(data)
+                    dispatch(allWebinarsFetch(id))
+            }
+        })
+    }
+}
+
+export const allWebinarsFetch = (id) => {
+    return dispatch => {
+        return fetch(`http://localhost:3001/api/webinars/${id}`, {
                     method: "GET",
                     headers: {
                         Accept: 'application/json',
@@ -82,10 +90,8 @@ export const webinarFetch = (id) => {
                     console.log(data)
                     dispatch(webinars(data))
                 })
-            }
-        })
+        }
     }
-}
 
 const loginUser = userObj => ({
     type: 'LOGIN_USER',

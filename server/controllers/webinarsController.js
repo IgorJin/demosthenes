@@ -12,6 +12,7 @@ exports.create = async (req, res) => {
 }
 
 exports.showAll = async(req, res) => {
+    console.log(req.params, 'req.params')
     await IWebinar.find({host: req.params.userId}, (err, webinars)=>{
         if (err) return console.error(err);
     })

@@ -1,20 +1,25 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import {useRouteMatch} from "react-router-dom";
 import io from "socket.io-client";
 import '../webinar.scss'
 let socket
 const Webinar = () => {
+    let room = useRouteMatch('/webinar/:id').params.id
     const [messages, setMessages] = useState([])
     useEffect(() => {
         socket = io('http://localhost:3001')
         socket.on('sendMessage', (message) => {
-
+            
             setMessages([...messages, message])
         })
-        socket.emit('join', { name: 'Igor' + socket.id }, (error) => {
+        console.log(room);
+        
+        socket.emit('join', { room }, (error) => {
             if (error) {
                 alert(error);
             }
         });
+        socket.on('NEW_USER', (message)=>console.log(message))
     }, [])
 
     useEffect(() => {
