@@ -7,11 +7,11 @@ const webinarReducer = (state = initialState, action) => {
                 ...state,
                 onVebinar:true
             }
-        case 'GET_WEBINAR':
-            return {
+        case 'SET_WEBINAR': 
+           return {
                 ...state,
-                webinars: action.allWebinars
-            }
+                webinar : action.webinar
+           } 
         default:
             return state
     }

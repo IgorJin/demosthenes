@@ -5,10 +5,10 @@ import {webinarFetch, allWebinarsFetch} from '../../actions'
 import { connect } from 'react-redux'
 import {Link} from "react-router-dom";
 import './index.scss'
-const Room = ({comeInWebinar, webinars, user, allWebinars}) => {
+const Room = ({comeInWebinar, user, allWebinars}) => {
     useEffect(()=>{
         if (user._id) allWebinars(user._id)
-    }, [user])
+    }, [user._id])
     return (
         <div className='room'>
             <div className='room__inner'>
@@ -27,8 +27,8 @@ const Room = ({comeInWebinar, webinars, user, allWebinars}) => {
                             <Header>Новые</Header>
                         </div>
                         <div className='room__inner__item__body'>
-                            {webinars && webinars.map((webinar, idx)=>(
-                                <div key={idx}> <Link to ={`/webinar/${webinar.id}`}>{webinar.title}; by {webinar.host.displayName}</Link></div>
+                            {user.webinars && user.webinars.map((webinar, idx)=>(
+                                <div key={idx}> <Link to ={`/webinar/${webinar.id}/${user._id}`}>{webinar.title}; by {webinar.host.displayName}</Link></div>
                             ))}
                         </div>
                     </div>
@@ -54,7 +54,6 @@ const Room = ({comeInWebinar, webinars, user, allWebinars}) => {
 }
 
 const mapStateToProps = state => ({
-    webinars: state.webinarReducer.webinars,
     user: state.authReducer.currentUser
 })
 const mapDispatchToProps = (dispatch) =>({

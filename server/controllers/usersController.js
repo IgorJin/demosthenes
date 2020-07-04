@@ -2,7 +2,6 @@ const User = require('../models/User')
 const config = require('../../etc/config.json')
 
 exports.addUser = async function(req,res) {
-    console.log(req.body);
     const user = new User({
         displayName: req.body.user.username,
         email: req.body.user.email,

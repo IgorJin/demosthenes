@@ -93,6 +93,11 @@ export const allWebinarsFetch = (id) => {
         }
     }
 
+export const setWebinarInfo = (webinar) => ({
+    type: 'SET_WEBINAR',
+    webinar
+    })
+
 const loginUser = userObj => ({
     type: 'LOGIN_USER',
     playload: userObj,
@@ -105,6 +110,6 @@ export const comeWebinar = () => ({
 })
 
 const webinars = (webinarsObj) => ({
-    type: 'GET_WEBINAR',
+    type: 'GET_WEBINARS',
     allWebinars: webinarsObj
 })

@@ -13,6 +13,11 @@ const authReducer = (state = initialState, action) => {
                 currentUser:action.playload,
                 isLogin: action.isLogin
             };
+        case 'GET_WEBINARS':
+            return {
+                ...state,
+                currentUser: {...state.currentUser, webinars: action.allWebinars}
+            }
         default:
             return state;
         }

@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     },
     passwordHash: String,
     token: String,
+    socket: String
 })
 UserSchema.methods.generateToken = async () => {
     let head = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'jwt' })).toString('base64');
@@ -33,6 +34,11 @@ UserSchema.statics.findByCredentials  = async (email, password) => {
         throw new Error({ error: 'Invalid password credentials' })
     }
     return user
+}
+
+UserSchema.statics.findById  = async (id) => {
+    let u = await User.findOne({ _id: id})
+    return u 
 }
 
 const User = mongoose.model('User', UserSchema)

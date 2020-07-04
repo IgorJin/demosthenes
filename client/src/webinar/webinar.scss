@@ -12,19 +12,72 @@
     width: 100%;
     display: flex;
 }
+.stream-topbar{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+}
 .stream-center{
     flex-grow: 1;
 }
 .stream-chat-wrapper{
-    display: block;
+    display: flex;
     float: right;
     height: 100vh;
     border: 1px solid white;
-    width: 250px;
+    width: 280px;
     flex-grow: 0;
-
     & * {
         color: white;
     }
-    
+    .stream-chat{
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        & > ul{
+            padding: 5px 5px 10px 10px;
+            overflow: auto;
+        }
+        &__message > span{
+            display: inline-block;
+            overflow: hidden;
+        }
+        &__message{
+            text-align: right;
+            &__author{
+                width: calc(30% - 35px);
+                vertical-align: top;
+            }
+            &__text {
+                text-align: left;
+                width: 70%;
+                margin-left: 10px;
+                background: darkgrey;
+                padding: 4px 12px;
+                border-radius: 4px;
+            }
+        }
+        &__textarea{
+            
+            & textarea{
+                background: black;
+                resize: none;
+                display: block;
+                width: 100%;
+                height: 100%;
+                border: none;
+                outline: none;
+                padding: 8px 12px;
+            }
+        }
+    }
+}
+.rightbar{
+        display: none;
+        background: darkgrey;
+        color: white;
+        &.show{
+            display: block;
+        }
 }

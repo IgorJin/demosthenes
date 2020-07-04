@@ -9,6 +9,8 @@ const webinarRouter = require('./routes/webinarRoute')
 const db = require('./db') 
 const config = require('../etc/config.json') 
 const socketio = require('socket.io');
+const IUser = require('./models/User')
+const IWebinar = require('./models/IWebinar')
 
 const app = express();
 const server = http.createServer(app);
@@ -28,14 +30,26 @@ app.use('/api/webinars', webinarRouter)
 
 db.setUpConnection();
 
-io.on('connection', (socket)=>{
+io.on('connection', async (socket)=>{
     console.log(`Socket ${socket.id} connected`);
-    io.emit('sendMessage', { user: 'admin', message: `Welcome to room ${socket.id}` })
-    socket.on('join', (room) => {
+    let webinar
+    let user
+    socket.on('join', async ({room, currentUser}) => {
         socket.join(room)
-        io.to(room).emit('NEW_USER', { name: 'CurrentUser join channel' })
+        user = await IUser.findById(currentUser)
+        user.socket = socket.id
+        await user.save()
+        webinar = await IWebinar.findById(room)
+        if (webinar.host._id != currentUser) {
+            await IWebinar.addUser(room, currentUser)
+        }
+        webinar = await IWebinar.getUsers(room)
+        io.to(room).emit('NEW_USER', {user:'admin', newUser: user, webinar, message: `Welcome to Room #${room}, ${user.displayName}` })
     })
-    //socket.broadcast.to()
+    socket.on('sendMessage', async (message) => {
+        user = await IUser.findOne({socket:message.user})
+        io.to(message.room).emit('getMessage', { user:user.displayName, message: message.message})
+    })
     socket.on('disconnect', () => {
         console.log('disconnect');
     })
