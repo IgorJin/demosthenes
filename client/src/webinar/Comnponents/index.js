@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useRouteMatch} from "react-router-dom";
 import {setWebinarInfo} from '../../actions'
 import { connect } from 'react-redux'
@@ -10,9 +10,21 @@ const Webinar = ({webinar, setWebinarInfo}) => {
     let currentUser = useRouteMatch('/webinar/:id/:userId').params.userId
     const [isShowRightbar, setisShowRightbar] = useState(false)
     const [message, setMessage] = useState('')
+    const [stream, setStream] = useState()
     const [messages, setMessages] = useState([])
+
+    const userVideo = useRef()
+    const recipientVideo = useRef()
+    
     useEffect(() => {
         socket = io('http://localhost:3001')
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            setStream(stream);
+            if (userVideo.current) {
+              userVideo.current.srcObject = stream;
+            }
+          })
+
         socket.emit('join', { room, currentUser }, (error) => {
             if (error) {
                 alert(error);
@@ -42,6 +54,7 @@ const Webinar = ({webinar, setWebinarInfo}) => {
             setMessage('')
         } 
     }
+
     return (
         <div className="webinar-app">
             <main className="stream-main">
@@ -59,6 +72,10 @@ const Webinar = ({webinar, setWebinarInfo}) => {
                     </div>
                 </div>
                 <div className='stream-center'>
+                    <div className="stream-center__video">
+                                <video playsInline ref={userVideo} autoPlay />
+                                <video playsInline ref={recipientVideo} autoPlay />
+                    </div>
                 </div>
                 <div className="stream-chat-wrapper">
                     <div className="stream-chat" >

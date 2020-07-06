@@ -17,15 +17,16 @@
     height: 70px;
     display: flex;
     justify-content: space-between;
+    position: absolute;
 }
 .stream-center{
     flex-grow: 1;
+    padding-top: 70px;
 }
 .stream-chat-wrapper{
+    margin-top: 70px;
     display: flex;
     float: right;
-    height: 100vh;
-    border: 1px solid white;
     width: 280px;
     flex-grow: 0;
     & * {
@@ -69,6 +70,7 @@
                 border: none;
                 outline: none;
                 padding: 8px 12px;
+                border-radius: 4px;
             }
         }
     }
@@ -80,4 +82,13 @@
         &.show{
             display: block;
         }
+}
+.stream-center{
+
+    &__video{
+
+        & video{
+            border: 2px solid white;
+        }
+    }
 }
