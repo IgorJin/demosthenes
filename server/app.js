@@ -50,6 +50,13 @@ io.on('connection', async (socket)=>{
         user = await IUser.findOne({socket:message.user})
         io.to(message.room).emit('getMessage', { user:user.displayName, message: message.message})
     })
+    socket.on('callUser', (data)=>{
+        console.log(data.to);
+        io.to(data.to).emit('outgoing', {signal:data.signalData, from:data.from})
+    })
+    socket.on("acceptCall", (data) => {
+        io.to(data.to).emit('callAccepted', data.signal);
+    })
     socket.on('disconnect', () => {
         console.log('disconnect');
     })

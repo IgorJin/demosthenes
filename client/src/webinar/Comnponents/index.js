@@ -3,7 +3,9 @@ import {useRouteMatch} from "react-router-dom";
 import {setWebinarInfo} from '../../actions'
 import { connect } from 'react-redux'
 import io from "socket.io-client";
+import Peer from "simple-peer"
 import '../webinar.scss'
+
 let socket
 const Webinar = ({webinar, setWebinarInfo}) => {
     let room = useRouteMatch('/webinar/:id/:userId').params.id
@@ -12,12 +14,17 @@ const Webinar = ({webinar, setWebinarInfo}) => {
     const [message, setMessage] = useState('')
     const [stream, setStream] = useState()
     const [messages, setMessages] = useState([])
-
+    const [callAccepted, setCallAccepted] = useState(false)
+    const [caller, setCaller] = useState("");
+    const [callerSignal, setCallerSignal] = useState();
+    const [receivingCall, setReceivingCall] = useState(false);
+    
     const userVideo = useRef()
     const recipientVideo = useRef()
     
     useEffect(() => {
         socket = io('http://localhost:3001')
+
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             setStream(stream);
             if (userVideo.current) {
@@ -30,6 +37,7 @@ const Webinar = ({webinar, setWebinarInfo}) => {
                 alert(error);
             }
         });
+
     }, [])
 
     useEffect(() => {
@@ -42,6 +50,12 @@ const Webinar = ({webinar, setWebinarInfo}) => {
             
             setMessages([...messages, mess])
         })
+        socket.on("outgoing", (data) => {
+            console.log('outgoing', data)
+            setReceivingCall(true);
+            setCaller(data.from);
+            setCallerSignal(data.signal);
+          })
         return () => {
             socket.emit('disconnect');
             socket.off();
@@ -55,6 +69,70 @@ const Webinar = ({webinar, setWebinarInfo}) => {
         } 
     }
 
+    function callPeer(id){
+        console.log(id);
+        const peer = new Peer({
+            initiator: true,
+            trickle: false,
+            // config: {
+            //     iceServers: [
+            //         {
+            //             urls: "stun:numb.viagenie.ca",
+            //             username: "sultan1640@gmail.com",
+            //             credential: "98376683"
+            //         },
+            //         {
+            //             urls: "turn:numb.viagenie.ca",
+            //             username: "sultan1640@gmail.com",
+            //             credential: "98376683"
+            //         }
+            //     ]
+            // },
+              stream: stream,
+        });
+
+        peer.on("signal", data => {
+            socket.emit("callUser", { to: id, signalData: data, from: socket.id })
+        })
+
+        peer.on("stream", stream => {
+            if (recipientVideo.current) {
+                recipientVideo.current.srcObject = stream;
+            }
+        });
+
+        socket.on("callAccepted", signal => {
+            peer.signal(signal);
+        })
+    }
+    function acceptCall() {
+        const peer = new Peer({
+            initiator: false,
+            trickle: false,
+            stream: stream,
+          });
+          peer.on("signal", data => {
+            console.log(data, 'to', socket.id);
+            socket.emit("acceptCall", { signal: data, to: caller })
+          })
+      
+          peer.on("stream", stream => {
+            console.log('stream', stream);
+            recipientVideo.current.srcObject = stream;
+          });
+
+          peer.signal(callerSignal);
+    }
+
+    let incomingCall;
+    if (receivingCall) {
+        incomingCall = (
+            <div>
+                <h1>{caller} is calling you</h1>
+                <button onClick={acceptCall}>Accept</button>
+            </div>
+        )
+  }
     return (
         <div className="webinar-app">
             <main className="stream-main">
@@ -66,12 +144,13 @@ const Webinar = ({webinar, setWebinarInfo}) => {
                         <button className='stream-topbar__right__button' onClick={()=>setisShowRightbar(!isShowRightbar)}>Участники</button>
                         <div className={`rightbar ${isShowRightbar ? 'show' : 'hidden'}`}>
                             {webinar && webinar.users.map((user, idx) =>
-                                <div key={idx}>{user.displayName}</div>
+                                <div key={idx} onClick={()=>callPeer(user.socket)}>{user.displayName}({user.socket})</div>
                             )}
                         </div>
                     </div>
                 </div>
                 <div className='stream-center'>
+                    {incomingCall}
                     <div className="stream-center__video">
                                 <video playsInline ref={userVideo} autoPlay />
                                 <video playsInline ref={recipientVideo} autoPlay />
