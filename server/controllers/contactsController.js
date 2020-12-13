@@ -1,7 +1,7 @@
-const Contact = require('../models/Contacts')
+const IContact = require('../models/IContact')
 
 exports.addContact = async function(req,res) {
-    const contact = new Contact({
+    const contact = new IContact({
         name: {
             first: 'AAron',
             last: 'Ramsey'
@@ -17,12 +17,12 @@ exports.addContact = async function(req,res) {
 }
 
 exports.deleteContact = async function(req,res) {
-    await Contact.findById(req.params.id).remove()
+    await IContact.findById(req.params.id).remove()
     res.send('deleted Task id='+ req.params.id)
 }
 
 exports.showAll = function(req,res) {   
-    Contact.find(function (err, contacts) {
+    IContact.find(function (err, contacts) {
         if (err) return console.error(err);
         res.send(contacts)
       })

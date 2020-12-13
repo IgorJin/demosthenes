@@ -1,7 +1,7 @@
-const Todo = require('../models/Task')
+const ITask = require('../models/ITask')
 
 exports.addTask = async function(req,res) {
-    const card = new Todo({
+    const card = new ITask({
     text: req.body.text,
     type: 'Задача',
     recipient: { 
@@ -15,7 +15,7 @@ exports.addTask = async function(req,res) {
 
 exports.editTask = async function(req,res) {
     console.log(req.body);
-      await Todo.updateOne({_id : req.params.id}, {...req.body.data}, function (err, result) {
+      await ITask.updateOne({_id : req.params.id}, {...req.body.data}, function (err, result) {
         if (err) return console.error(err);
         // console.log(result);
       })
@@ -27,7 +27,7 @@ exports.editTask = async function(req,res) {
 }
 
 exports.showAll = async function(req,res) {   
-    await Todo.find({_id: '5ead31d3161f693288e4512c'}, function (err, todos) {
+    await ITask.find({_id: '5ead31d3161f693288e4512c'}, function (err, todos) {
         if (err) return console.error(err);
       }).populate('recipient') 
       .exec(function (err, todos) {
@@ -42,7 +42,7 @@ exports.reqBody = function(req,res) {
 }
 
 exports.deleteTask = async function(req,res) {
-    await Todo.findById(req.params.id).remove()
+    await ITask.findById(req.params.id).remove()
     res.send('deleted Task id='+ req.params.id)
 }
 

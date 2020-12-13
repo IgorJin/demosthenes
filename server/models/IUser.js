@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     token: String,
     socket: String
 })
-UserSchema.methods.generateToken = async () => {
+UserSchema.methods.generateToken = async function () {
     let head = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'jwt' })).toString('base64');
     let body = Buffer.from(JSON.stringify(this)).toString('base64');
     let signature = crypto.createHmac('SHA256', tokenKey).update(`${head}.${body}`).digest('base64'); 
@@ -41,6 +41,6 @@ UserSchema.statics.findById  = async (id) => {
     return u 
 }
 
-const User = mongoose.model('User', UserSchema)
+const IUser = mongoose.model('User', UserSchema)
 
-module.exports = User
+module.exports = IUser

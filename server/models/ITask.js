@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
-const Contact= require('./Contacts')
+const IContact= require('./IContact')
 
 const TaskSchema = new Schema({
     text: String,
@@ -11,9 +11,9 @@ const TaskSchema = new Schema({
     type: String,
     recipient: { 
         type: Schema.Types.ObjectId, 
-        ref: Contact
+        ref: IContact
     },
     status: Number
 })
 
-module.exports = mongoose.model('Task', TaskSchema)
+module.exports = mongoose.model('Todo', TaskSchema)

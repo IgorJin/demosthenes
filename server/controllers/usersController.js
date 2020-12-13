@@ -1,8 +1,8 @@
-const User = require('../models/User')
+const IUser = require('../models/IUser')
 const config = require('../../etc/config.json')
 
 exports.addUser = async function(req,res) {
-    const user = new User({
+    const user = new IUser({
         displayName: req.body.user.username,
         email: req.body.user.email,
         passwordHash: req.body.user.password,
@@ -22,7 +22,7 @@ exports.authUser = async function(req,res) {
 exports.loginIn = async function(req,res) {   
     try {
         const {email, password} = req.body.user
-        const user = await User.findByCredentials(email, password)
+        const user = await IUser.findByCredentials(email, password)
         if (!user) throw new Error('Dont find user')
         let token = await user.genrateToken();
         res.status(200).json({
@@ -35,7 +35,7 @@ exports.loginIn = async function(req,res) {
     
 }
 exports.all = async function(req,res) {   
-    let u = await User.findOne({ email: 'i.zubenko2012@yandex.ru'})
+    let u = await IUser.findOne({ email: 'i.zubenko2012@yandex.ru'})
     res.status(200).json({ u})
 }
 
