@@ -1,20 +1,20 @@
 const initialState = {}
 
-const webinarReducer = (state = initialState, action) => {
+const meetingReducer = (state = initialState, action) => {
     switch(action.type){
-        case 'WEBINAR_COME': 
+        case 'MEETING_COME': 
             return {
                 ...state,
                 onVebinar:true
             }
-        case 'SET_WEBINAR': 
+        case 'SET_MEETING': 
            return {
                 ...state,
-                webinar : action.webinar
+                meeting : action.meeting
            } 
         default:
             return state
     }
 }
 
-export default webinarReducer
+export default meetingReducer

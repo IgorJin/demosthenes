@@ -1,19 +1,18 @@
-const IWebinar = require('../models/IWebinar')
+const IMeeting = require('../models/IMeeting')
 
 exports.create = async (req, res) => {
         let id = ''+parseInt(Math.random(1)*20)
-        const webinar = new IWebinar({
-            title: 'new Webinar', //change
+        const meeting = new IMeeting({
+            title: 'new meeting', //change
             host: req.params.userId,
             id
         })
-        await webinar.save()
+        await meeting.save()
         res.send(id)
 }
 
 exports.showAll = async(req, res) => {
-    console.log(req.params, 'req.params')
-    await IWebinar.find({host: req.params.userId}, (err, webinars)=>{
+    await IMeeting.find({host: req.params.userId}, (err, meetings)=>{
         if (err) return console.error(err);
     })
     .populate('host') 

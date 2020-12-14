@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { setWebinarInfo } from "../../actions";
+import { setMeetingInfo } from "../../actions";
 import { connect } from "react-redux";
 import io from "socket.io-client";
 import Peer from "simple-peer";
-import "../webinar.scss";
+import "../meeting.scss";
 
 let socket;
-const Webinar = ({ webinar, setWebinarInfo }) => {
-  let room = useRouteMatch("/webinar/:id/:userId").params.id;
-  let currentUser = useRouteMatch("/webinar/:id/:userId").params.userId;
+const Meeting = ({ meeting, setMeetingInfo }) => {
+  let room = useRouteMatch("/meeting/:id/:userId").params.id;
+  let currentUser = useRouteMatch("/meeting/:id/:userId").params.userId;
   const [isShowRightbar, setisShowRightbar] = useState(false);
   const [message, setMessage] = useState("");
   const [stream, setStream] = useState();
@@ -47,7 +47,7 @@ const Webinar = ({ webinar, setWebinarInfo }) => {
         ...messages,
         { user: message.user, message: message.message },
       ]);
-      setWebinarInfo(message.webinar);
+      setMeetingInfo(message.meeting);
     });
     socket.on("getMessage", (mess) => {
       console.log(mess, "mess");
@@ -150,8 +150,8 @@ const Webinar = ({ webinar, setWebinarInfo }) => {
               Участники
             </button>
             <div className={`rightbar ${isShowRightbar ? "show" : "hidden"}`}>
-              {webinar &&
-                webinar.users.map((user, idx) => (
+              {meeting &&
+                meeting.users.map((user, idx) => (
                   <div key={idx} onClick={() => callPeer(user.socket)}>
                     {user.displayName}({user.socket})
                   </div>
@@ -205,9 +205,9 @@ const Webinar = ({ webinar, setWebinarInfo }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  webinar: state.webinarReducer.webinar,
+  meeting: state.meetingReducer.meeting,
 });
 const mapDispatchToProps = (dispatch) => ({
-  setWebinarInfo: (webinar) => dispatch(setWebinarInfo(webinar)),
+  setMeetingInfo: (meeting) => dispatch(setMeetingInfo(meeting)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Webinar);
+export default connect(mapStateToProps, mapDispatchToProps)(Meeting);

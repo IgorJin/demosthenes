@@ -13,7 +13,7 @@ import Search from './components/Search'
 import api from './services';
 import Sidebar from './components/Sidebar/Sidebar';
 import CabinetLoginPage from './components/CabinetLoginPage';
-import Webinar from './webinar/Comnponents';
+import Meeting from './meeting/Comnponents';
 import routes from './routes'
 const cn = require('classnames');
 
@@ -27,7 +27,7 @@ const App: FunctionComponent<Props> = (props) => {
   const toggleSidebar = () => {
     setSidebarState(!sidebarState)
   }
-  if (useRouteMatch('/webinar')) return <Webinar />
+  if (useRouteMatch('/meeting')) return <Meeting />
   return (
     <div className='App'>
       {

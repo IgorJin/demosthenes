@@ -16,4 +16,4 @@ const TaskSchema = new Schema({
     status: Number
 })
 
-module.exports = mongoose.model('Todo', TaskSchema)
+module.exports = mongoose.model('ITask', TaskSchema)

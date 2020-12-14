@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import RoomButton from './RoomButton';
 import Header from '../Header';
-import {webinarFetch, allWebinarsFetch} from '../../actions'
+import {meetingFetch, allMeetingsFetch} from '../../actions'
 import { connect } from 'react-redux'
 import {Link} from "react-router-dom";
 import './index.scss'
-const Room = ({comeInWebinar, user, allWebinars}) => {
+const Room = ({comeInMeeting, user, allMeetings}) => {
     useEffect(()=>{
-        if (user._id) allWebinars(user._id)
+        if (user._id) allMeetings(user._id)
     }, [user._id])
     return (
         <div className='room'>
@@ -16,9 +16,9 @@ const Room = ({comeInWebinar, user, allWebinars}) => {
                     <div className='room__inner__item'>
                         <div className='room__inner__item__head'>
                             <div>
-                                <Link to ='/webinar'>
+                                <Link to ='/meeting'>
                                     <RoomButton
-                                        color={'blue'} onClick={() =>comeInWebinar(user._id)}>Запустить вебинар</RoomButton>
+                                        color={'blue'} onClick={() =>comeInMeeting(user._id)}>Запустить вебинар</RoomButton>
                                 </Link>
                                 
                                 <RoomButton
@@ -27,8 +27,8 @@ const Room = ({comeInWebinar, user, allWebinars}) => {
                             <Header>Новые</Header>
                         </div>
                         <div className='room__inner__item__body'>
-                            {user.webinars && user.webinars.map((webinar, idx)=>(
-                                <div key={idx}> <Link to ={`/webinar/${webinar.id}/${user._id}`}>{webinar.title}; by {webinar.host.displayName}</Link></div>
+                            {user.meetings && user.meetings.map((meeting, idx)=>(
+                                <div key={idx}> <Link to ={`/meeting/${meeting.id}/${user._id}`}>{meeting.title}; by {meeting.host.displayName}</Link></div>
                             ))}
                         </div>
                     </div>
@@ -57,8 +57,8 @@ const mapStateToProps = state => ({
     user: state.authReducer.currentUser
 })
 const mapDispatchToProps = (dispatch) =>({
-    comeInWebinar: (uId) => dispatch(webinarFetch(uId)),
-    allWebinars: (uId) => dispatch(allWebinarsFetch(uId)),
+    comeInMeeting: (uId) => dispatch(meetingFetch(uId)),
+    allMeetings: (uId) => dispatch(allMeetingsFetch(uId)),
     
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import authReducer from './authReducer'
-import webinarReducer from './webinarReducer'
+import meetingReducer from './meetingReducer'
 
 export default combineReducers({
     authReducer,
-    webinarReducer
+    meetingReducer
 })
