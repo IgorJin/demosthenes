@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../db");
 const runHTTPServer = require("./http").runServer;
 const config = require("../../etc/config.json");
-const socketConnect = require("./sockets")
+const runSocketServer = require("./sockets").runServer
 
 const app = express();
 const server = require("http").createServer(app);
@@ -19,7 +19,7 @@ async function runServer() {
 
   const port = config.port;
   runHTTPServer(app);
-  socketConnect(server);
+  runSocketServer(server);
 
   if (process.env.NODE_ENV !== "test") {
     server.listen(port, () =>

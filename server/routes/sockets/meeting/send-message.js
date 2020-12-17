@@ -1,4 +1,4 @@
-const IUser = require("../../models/IUser");
+const IUser = require("../../../models/IUser");
 
 function sendMessage(io, socket, data) {
   const { room, currentUser } = data;

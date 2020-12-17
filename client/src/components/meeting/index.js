@@ -2,11 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { setMeetingInfo } from "../../actions";
 import { connect } from "react-redux";
-import io from "socket.io-client";
-import Peer from "simple-peer";
 import "../meeting.scss";
 
-let socket;
 const Meeting = ({ meeting, setMeetingInfo }) => {
   let room = useRouteMatch("/meeting/:id/:userId").params.id;
   let currentUser = useRouteMatch("/meeting/:id/:userId").params.userId;
@@ -23,7 +20,6 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
   const recipientVideo = useRef();
 
   useEffect(() => {
-    socket = io("http://localhost:3001");
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
@@ -34,7 +30,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
         }
       });
 
-    socket.emit("join", { room, currentUser }, (error) => {
+    socket.emit("meeting:join", { room, currentUser }, (error) => {
       if (error) {
         alert(error);
       }
@@ -72,61 +68,6 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
       setMessage("");
     }
   };
-
-  function callPeer(id) {
-    console.log(id);
-    const peer = new Peer({
-      initiator: true,
-      trickle: false,
-      // config: {
-      //     iceServers: [
-      //         {
-      //             urls: "stun:numb.viagenie.ca",
-      //             username: "sultan1640@gmail.com",
-      //             credential: "98376683"
-      //         },
-      //         {
-      //             urls: "turn:numb.viagenie.ca",
-      //             username: "sultan1640@gmail.com",
-      //             credential: "98376683"
-      //         }
-      //     ]
-      // },
-      stream: stream,
-    });
-
-    peer.on("signal", (data) => {
-      socket.emit("callUser", { to: id, signalData: data, from: socket.id });
-    });
-
-    peer.on("stream", (stream) => {
-      if (recipientVideo.current) {
-        recipientVideo.current.srcObject = stream;
-      }
-    });
-
-    socket.on("callAccepted", (signal) => {
-      peer.signal(signal);
-    });
-  }
-  function acceptCall() {
-    const peer = new Peer({
-      initiator: false,
-      trickle: false,
-      stream: stream,
-    });
-    peer.on("signal", (data) => {
-      console.log(data, "to", socket.id);
-      socket.emit("acceptCall", { signal: data, to: caller });
-    });
-
-    peer.on("stream", (stream) => {
-      console.log("stream", stream);
-      recipientVideo.current.srcObject = stream;
-    });
-
-    peer.signal(callerSignal);
-  }
 
   let incomingCall;
   if (receivingCall) {

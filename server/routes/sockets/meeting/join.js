@@ -1,7 +1,8 @@
-const IUser = require("../../models/IUser");
-const IMeeting = require("../../models/IMeeting");
+const IUser = require("../../../models/IUser");
+const IMeeting = require("../../../models/IMeeting");
 
-function join(io, socket, data) {
+async function join(io, socket, data) {
+  console.log("join");
   const { room, currentUser } = data;
   socket.join(room);
   user = await IUser.findById(currentUser);
