@@ -32,7 +32,7 @@ export const Provider: FunctionComponent = (props) => {
       return;
     }
 
-    const socket = SockerIOClient("/", { path: "/api/v1/conference/io", transports: ["websocket"], forceNew: true });
+    const socket = SockerIOClient("http://localhost:3001", { transports: ["websocket"], forceNew: true });
     socket.on("connect", () => {
       console.log("Initial connect to conference server");
       setSocket(socket);
@@ -71,11 +71,12 @@ export const Provider: FunctionComponent = (props) => {
     setSocket(undefined);
   }, [socket]);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (!socket) {
       connect();
     }
-  }, []);
+  }, [socket]);
+  
   return (
     <Context.Provider
       value={{

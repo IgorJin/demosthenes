@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useRouteMatch } from "react-router-dom";
+import { Context as VideoContext } from "../../lib/context/video"
+import { Context as SocketContext } from "../../lib/context/socket"
+
 import { setMeetingInfo } from "../../actions";
 import { connect } from "react-redux";
-import "../meeting.scss";
+import "./meeting.scss";
 
 const Meeting = ({ meeting, setMeetingInfo }) => {
   let room = useRouteMatch("/meeting/:id/:userId").params.id;
@@ -11,56 +14,13 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
   const [message, setMessage] = useState("");
   const [stream, setStream] = useState();
   const [messages, setMessages] = useState([]);
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [caller, setCaller] = useState("");
-  const [callerSignal, setCallerSignal] = useState();
-  const [receivingCall, setReceivingCall] = useState(false);
+
+
+  const { init } = useContext(VideoContext);
+  const { socket } = useContext(SocketContext);
 
   const userVideo = useRef();
   const recipientVideo = useRef();
-
-  useEffect(() => {
-
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        if (userVideo.current) {
-          userVideo.current.srcObject = stream;
-        }
-      });
-
-    socket.emit("meeting:join", { room, currentUser }, (error) => {
-      if (error) {
-        alert(error);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    socket.on("NEW_USER", (message) => {
-      setMessages([
-        ...messages,
-        { user: message.user, message: message.message },
-      ]);
-      setMeetingInfo(message.meeting);
-    });
-    socket.on("getMessage", (mess) => {
-      console.log(mess, "mess");
-
-      setMessages([...messages, mess]);
-    });
-    socket.on("outgoing", (data) => {
-      console.log("outgoing", data);
-      setReceivingCall(true);
-      setCaller(data.from);
-      setCallerSignal(data.signal);
-    });
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-  }, [messages]);
 
   const handleKeyPress = (e) => {
     if (e.charCode == 13) {
@@ -69,15 +29,11 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
     }
   };
 
-  let incomingCall;
-  if (receivingCall) {
-    incomingCall = (
-      <div>
-        <h1>{caller} is calling you</h1>
-        <button onClick={acceptCall}>Accept</button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const initWrapper = async () => init();
+    initWrapper();
+  }, [socket])
+
   return (
     <div className="webinar-app">
       <main className="stream-main">
@@ -93,7 +49,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
             <div className={`rightbar ${isShowRightbar ? "show" : "hidden"}`}>
               {meeting &&
                 meeting.users.map((user, idx) => (
-                  <div key={idx} onClick={() => callPeer(user.socket)}>
+                  <div key={idx} onClick={() => { }}>
                     {user.displayName}({user.socket})
                   </div>
                 ))}
@@ -101,7 +57,6 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
           </div>
         </div>
         <div className="stream-center">
-          {incomingCall}
           <div className="stream-center__video">
             <video playsInline ref={userVideo} autoPlay />
             <video playsInline ref={recipientVideo} autoPlay />
@@ -122,8 +77,8 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
                         <b>{user}</b>:
                       </span>
                     ) : (
-                      ""
-                    )}
+                          ""
+                        )}
                     <span className="stream-chat__message__text">
                       {message}
                     </span>
@@ -137,7 +92,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-              ></textarea>
+              />
             </div>
           </div>
         </div>
@@ -145,6 +100,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
     </div>
   );
 };
+
 const mapStateToProps = (state) => ({
   meeting: state.meetingReducer.meeting,
 });
