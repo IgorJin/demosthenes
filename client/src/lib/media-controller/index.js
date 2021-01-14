@@ -1,39 +1,10 @@
-// import CameraDevices from "./camera-devices";
-// import CameraSettings from "./camera-settings";
 
-class WebRtcConnection {
-  constructor(data) {
-    // this.connectionId = data.connectionId;
-    // this.publishCallId = data.publishCallId;
-    // this.user = data.user;
-    // this.type = data.type;
-    // this.purpose = data.purpose;
-    // this.iceServers = data.iceServers;
-    // this.onGotOffer = data.onGotOffer;
-    // this.onGotCandidate = data.onGotCandidate;
-    // this.onGotRemoteStream = data.onGotRemoteStream;
-    // this.onGotLocalStream = data.onGotLocalStream;
-    // this.onErrorGettingMedia = data.onErrorGettingMedia;
-    // this.sdpAnswerSet = false;
-    // this.onIceConnectionStateDisconnected = data.onIceConnectionStateDisconnected;
-    // this.connectionSettings = data.connectionSettings;
-    // this.devicePermissions = data.devicePermissions;
+class MediaController {
+
+  async generateLocalStream() {  //Get video from your webcam
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
+    return stream;
   }
-
-  // async generateLocalStream(devices) {
-  //   try {
-  //     const constraints = { audio: true, video: !this.user.isCaller };
-  //     if (devices && constraints.video) constraints.video = devices.videoDeviceId || true;
-  //     this.localStream = await CameraDevices.getUserMedia(CameraSettings.settings, constraints);
-  //     CameraDevices.applyDeviceSettings(this.localStream, this.devicePermissions);
-  //     if (this.onGotLocalStream) this.onGotLocalStream(this.localStream.getNativeStream());
-  //   } catch (e) {
-  //     if (this.onErrorGettingMedia) {
-  //       this.onErrorGettingMedia(e);
-  //     }
-  //     throw e;
-  //   }
-  // }
 
   async createPeerConnection() {
     this.peerConnection = new RTCPeerConnection({
@@ -56,15 +27,7 @@ class WebRtcConnection {
     this.peerConnection.onicecandidate = (e) =>
       e.candidate && this.onGotCandidate(this.connectionId, e.candidate);
   }
-}
 
-class MediaController {
-
-  async generateLocalStream() {  //Get video from your webcam
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-    console.log(stream, stream.getTracks());
-    return stream;
-  }
 
   //
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import "webrtc-adapter";
 import { useRouteMatch } from "react-router-dom";
-import { Context as VideoContext } from "../../lib/context/video"
-import { Context as SocketContext } from "../../lib/context/socket"
+import { Context as VideoContext } from "../../lib/context/video";
+import { Context as SocketContext } from "../../lib/context/socket";
 
 import { setMeetingInfo } from "../../actions";
 import { connect } from "react-redux";
@@ -11,12 +12,12 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
   let room = useRouteMatch("/meeting/:id/:userId").params.id;
   let currentUser = useRouteMatch("/meeting/:id/:userId").params.userId;
   const [isShowRightbar, setisShowRightbar] = useState(false);
+
   const [message, setMessage] = useState("");
-  const [stream, setStream] = useState();
   const [messages, setMessages] = useState([]);
 
-
-  const { init } = useContext(VideoContext);
+  const { init, participants, sendNewCandidate } = useContext(VideoContext);
+  console.log("Meeting -> participants", { participants, meeting });
   const { socket } = useContext(SocketContext);
 
   const userVideo = useRef();
@@ -30,9 +31,46 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
   };
 
   useEffect(() => {
-    const initWrapper = async () => init();
-    initWrapper();
-  }, [socket])
+    const initWrapper = async () => init(currentUser);
+    if (socket) {
+      initWrapper();
+
+      socket.emit("meeting:join", { room, currentUser }, (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
+    }
+  }, [socket]);
+
+  const speakerVideo = participants[0]; //participants.find((p) => p.user === currentUser);
+  const callerVideo = participants.length > 1 ? participants[1] : undefined;
+
+  console.log("participants length", participants.length, callerVideo);
+
+  useEffect(() => {
+    if (userVideo && userVideo.current && speakerVideo) {
+      userVideo.current.srcObject = speakerVideo.localStream;
+      console.log("userVideo.current.srcObject", userVideo.current.srcObject)
+
+      var playPromise = userVideo.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then((_) => {}).catch((error) => {});
+      }
+    }
+  }, [speakerVideo]);
+
+  useEffect(() => {
+    if (recipientVideo && recipientVideo.current && callerVideo) {
+      recipientVideo.current.srcObject = callerVideo.localStream;
+      console.log("recipientVideo.current.srcObject", recipientVideo.current);
+      recipientVideo.current.play();
+    }
+  }, [callerVideo]);
+
+  const handleStartRecVideo = () => {
+    recipientVideo.current.play();
+  }
 
   return (
     <div className="webinar-app">
@@ -49,7 +87,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
             <div className={`rightbar ${isShowRightbar ? "show" : "hidden"}`}>
               {meeting &&
                 meeting.users.map((user, idx) => (
-                  <div key={idx} onClick={() => { }}>
+                  <div key={idx} onClick={() => {}}>
                     {user.displayName}({user.socket})
                   </div>
                 ))}
@@ -57,14 +95,15 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
           </div>
         </div>
         <div className="stream-center">
+          <button onClick={handleStartRecVideo}>Call</button>
           <div className="stream-center__video">
-            <video playsInline ref={userVideo} autoPlay />
-            <video playsInline ref={recipientVideo} autoPlay />
+            <video className="1" playsInline ref={userVideo} autoPlay />
+            <video className="2" playsInline ref={recipientVideo} autoPlay />
           </div>
         </div>
         <div className="stream-chat-wrapper">
           <div className="stream-chat">
-            {messages.length > 0 && (
+            {messages && messages.length > 0 && (
               <ul>
                 {messages.map(({ user, message }, idx) => (
                   <li className="stream-chat__message" key={idx}>
@@ -77,8 +116,8 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
                         <b>{user}</b>:
                       </span>
                     ) : (
-                          ""
-                        )}
+                      ""
+                    )}
                     <span className="stream-chat__message__text">
                       {message}
                     </span>

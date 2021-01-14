@@ -17,7 +17,6 @@ const auth = async (req, res, next) => {
         user = JSON.parse(
           Buffer.from(tokenParts[1], "base64").toString("utf8")
         );
-        //res.status(200).json(user);
         req.user = user;
         next();
       } else {
