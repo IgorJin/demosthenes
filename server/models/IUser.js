@@ -21,7 +21,7 @@ UserSchema.methods.generateToken = async function () {
   let head = Buffer.from(JSON.stringify({ alg: "HS256", typ: "jwt" })).toString(
     "base64"
   );
-  let body = Buffer.from(JSON.stringify(this)).toString("base64");
+  let body = Buffer.from(JSON.stringify(this.id)).toString("base64");
   let signature = crypto
     .createHmac("SHA256", tokenKey)
     .update(`${head}.${body}`)
@@ -31,6 +31,7 @@ UserSchema.methods.generateToken = async function () {
   await this.save();
   return token;
 };
+
 UserSchema.statics.findByCredentials = async (email, password) => {
   const user = await IUser.findOne({ email });
   if (!user) {

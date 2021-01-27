@@ -4,16 +4,13 @@ import {
   Switch,
   Route,
   Redirect,
-  Link,
   useRouteMatch,
 } from "react-router-dom";
 import { connect } from 'react-redux'
 
-import Search from './components/Search'
-import api from './services';
 import Sidebar from './components/Sidebar/Sidebar';
 import CabinetLoginPage from './components/CabinetLoginPage';
-import Meeting from './components/meeting';
+import Meeting from './meeting';
 import routes from './routes'
 const cn = require('classnames');
 
@@ -23,39 +20,40 @@ interface Props {
 
 const App: FunctionComponent<Props> = (props) => {
   const { isLoginIn } = props;
-  const [sidebarState, setSidebarState] = useState(false);
-  const toggleSidebar = () => {
-    setSidebarState(!sidebarState)
-  }
-  if (useRouteMatch('/meeting')) return <Meeting />
+  const [showAuthForm, setShowAuthForm] = useState(false);
+  const [pageIsLoaded, setPageIsLoaded] = useState(false);
+  console.log("pageIsLoaded", pageIsLoaded, showAuthForm)
+
+  useEffect(() => {
+    setPageIsLoaded(true);
+  });
+
+  useEffect(() => {
+    setShowAuthForm(!isLoginIn);
+  }, [isLoginIn])
+
+  const isMeeting = useRouteMatch('/meeting');
+
   return (
     <div className='App'>
-      {
-        !isLoginIn &&
-        <CabinetLoginPage />
-      }
-      <Sidebar
-        sidebarState={sidebarState}
-        onToggleSidebar={toggleSidebar}
-      />
-      <div className='main'>
-        <Search />
+      {isMeeting && <Meeting />}
+      {showAuthForm && pageIsLoaded ? <CabinetLoginPage /> : undefined}
+      <main className='main'>
+        <Sidebar />
         <div className='content'>
-          <div className='content__inner'>
-            {!isLoginIn && <Redirect to="/" />}
-            <Switch>
-              {routes.map((route, index) => (
-                <Route
-                  key={index}
-                  path={route.path}
-                  exact={route.exact}
-                  children={<route.main />}
-                />
-              ))}
-            </Switch>
-          </div>
+          {!isLoginIn && <Redirect to="/" />}
+          <Switch>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                children={<route.main />}
+              />
+            ))}
+          </Switch>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

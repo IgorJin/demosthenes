@@ -3,10 +3,10 @@ const config = require("../../etc/config.json");
 const crypto = require("crypto");
 
 const auth = async (req, res, next) => {
-  if (req.header("Authorization")) {
+  if (req.cookies.authcookie) {
     try {
-      let user;
-      const jwt = req.header("Authorization");
+      let userId;
+      const jwt = req.cookies.authcookie;
       const token = jwt.replace("Bearer ", "");
       let tokenParts = token.split(".");
       let signature = crypto
@@ -14,10 +14,10 @@ const auth = async (req, res, next) => {
         .update(`${tokenParts[0]}.${tokenParts[1]}`)
         .digest("base64");
       if (signature === tokenParts[2]) {
-        user = JSON.parse(
+        userId = JSON.parse(
           Buffer.from(tokenParts[1], "base64").toString("utf8")
         );
-        req.user = user;
+        req.user = await IUser.findById(userId);
         next();
       } else {
         throw new Error();
