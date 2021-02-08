@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import "webrtc-adapter";
 import { useRouteMatch } from "react-router-dom";
-import { Context as VideoContext } from "../../lib/context/video";
-import { Context as SocketContext } from "../../lib/context/socket";
+import { Context as VideoContext } from "../lib/context/video";
+import { Context as SocketContext } from "../lib/context/socket";
 
-import { setMeetingInfo } from "../../actions";
+import { setMeetingInfo } from "../actions";
 import { connect } from "react-redux";
 import "./meeting.scss";
 

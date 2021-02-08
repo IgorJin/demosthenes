@@ -1,5 +1,10 @@
-@import "./variables.scss";
-@import "./Room/index.scss";
+@import "../variables.scss";
+
+main {
+  display: flex;
+  padding: 15px;
+  background: $primary-white;
+}
 
 .avatar {
   display: inline-block;
@@ -12,6 +17,7 @@
     height: 46px;
   }
 }
+
 .select {
   select {
     background: none;
@@ -19,17 +25,17 @@
     color: $blue;
     outline: none;
   }
-    &.right{
-      float: right;
-    }
-    &.left{
-      float: left;
-    }
+  &.right {
+    float: right;
+  }
+  &.left {
+    float: left;
+  }
 }
 .changeTaskIcon {
-    vertical-align: middle;
-    margin-left: 8px;
-    cursor: pointer;
+  vertical-align: middle;
+  margin-left: 8px;
+  cursor: pointer;
   &__active {
     display: inline-block;
     border: 2px solid $yellow;
@@ -69,13 +75,13 @@
     background-size: 16px 16px;
   }
 }
-.actionButton{
+.actionButton {
   display: inline-block;
-  &__button{
+  &__button {
     font-weight: 600;
     font-size: 13px;
     line-height: 19px;
-    color: #FFFFFF;
+    color: #ffffff;
     background: $blue;
     box-shadow: 0px 4px 10px rgba(16, 156, 241, 0.24);
     border-radius: 4px;
@@ -136,10 +142,10 @@
     text-align: center;
     &--active &__num_date {
       span {
-      background-color: $blue;
-      border-radius: 50%;
-      color: white;
-      padding: 2px 0px;
+        background-color: $blue;
+        border-radius: 50%;
+        color: white;
+        padding: 2px 0px;
       }
     }
     &__str_date {
@@ -151,7 +157,7 @@
       opacity: 0.5;
       margin-bottom: 5px;
     }
-    &__num_date span{
+    &__num_date span {
       font-size: 12px;
       line-height: 18px;
       text-align: center;
@@ -185,7 +191,7 @@
     fill: $yellow !important;
     stroke: none !important;
   }
-  &__arc{
+  &__arc {
     position: relative;
     &__percent {
       color: $green;
@@ -214,7 +220,6 @@
         margin-left: 8px;
       }
     }
-
   }
 }
 .task_card {
@@ -269,7 +274,7 @@
       display: none;
     }
 
-    &__current_status{
+    &__current_status {
       span {
         width: 84px;
         cursor: pointer;
@@ -285,16 +290,16 @@
         letter-spacing: 0.02em;
         color: #ffffff;
       }
-      &--active span{
+      &--active span {
         background-color: $yellow;
       }
-      &--completed span{
+      &--completed span {
         background-color: $green;
       }
-      &--ended span{
+      &--ended span {
         background-color: $red;
       }
-    } 
+    }
   }
 }
 .recipient {
@@ -314,8 +319,13 @@
 }
 
 .content {
-  padding: 36px;
-  background-color: $background;
+  background: $bg-content;
+  flex: 1;
+  border-radius: 30px;
+  padding-top: 60px;
+  display: flex;
+  justify-content: space-evenly;
+
   .header {
     font-weight: 500;
     font-size: 15px;
@@ -325,6 +335,7 @@
     margin: 0;
     display: inline-block;
   }
+
   .dashboard {
     &__inner {
       display: flex;
@@ -383,67 +394,64 @@
           }
         }
       }
-      
     }
   }
 
-.contacts {
+  .contacts {
+    &__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    &__table {
+      background-color: white;
+      box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
 
-  &__head{  
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  &__table{
-    background-color: white;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
-    border-radius: 4px;
-
-    table {
-      border-spacing: 0px ;
-      border-collapse: collapse;
-      width: 100%;
-      padding: 0 24px;
-      th {
-        text-align: left;
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 19px;
-        color: $dark_blue;
-        opacity: 0.5;
-        padding: 14px 0;
-        &:first-child{
-          padding-left: 24px;
+      table {
+        border-spacing: 0px;
+        border-collapse: collapse;
+        width: 100%;
+        padding: 0 24px;
+        th {
+          text-align: left;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 19px;
+          color: $dark_blue;
+          opacity: 0.5;
+          padding: 14px 0;
+          &:first-child {
+            padding-left: 24px;
+          }
+          &:last-child {
+            text-align: right;
+            padding-right: 24px;
+          }
         }
-        &:last-child {
-          text-align: right;
-          padding-right: 24px;
+        tr {
+          border-bottom: 1px solid #ebeff2;
         }
-      }
-      tr {
-        border-bottom: 1px solid #EBEFF2;
-      }
-      td {
-        margin-right: 24px;
-        font-size: 13px;
-        line-height: 19px;
-        color: $table_gray;
-        padding: 20px 0px;
-        &:last-child{
-          text-align: right;
-          padding-right: 24px;
+        td {
+          margin-right: 24px;
+          font-size: 13px;
+          line-height: 19px;
+          color: $table_gray;
+          padding: 20px 0px;
+          &:last-child {
+            text-align: right;
+            padding-right: 24px;
+          }
+          &:first-child {
+            padding-left: 24px;
+          }
         }
-        &:first-child{
-          padding-left: 24px;
-        }
-      }
-      tbody tr {
-        &:last-child {
-          border-bottom: none;
+        tbody tr {
+          &:last-child {
+            border-bottom: none;
+          }
         }
       }
     }
   }
-
-}
 }

@@ -9,6 +9,11 @@ exports.addUser = async function (req, res) {
   });
   await user.save();
   let token = await user.generateToken();
+  res.cookie("authcookie", token, {
+    maxAge: 900000,
+    httpOnly: true,
+    sameSite: "strict",
+  });
   res.status(200).json({
     user,
     token,
@@ -25,14 +30,21 @@ exports.loginIn = async function (req, res) {
     const user = await IUser.findByCredentials(email, password);
     if (!user) throw new Error("Dont find user");
     let token = await user.generateToken();
+    res.cookie("authcookie", token, {
+      maxAge: 900000,
+      httpOnly: true,
+      sameSite: "strict",
+    });
     res.status(200).json({
       user,
       token,
     });
   } catch (e) {
+    console.error(e);
     res.status(400).send(e);
   }
 };
+
 exports.all = async function (req, res) {
   let u = await IUser.findOne({ email: "i.zubenko2012@yandex.ru" });
   res.status(200).json({ u });

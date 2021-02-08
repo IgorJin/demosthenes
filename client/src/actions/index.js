@@ -11,7 +11,6 @@ export const registerPostFetch = (user) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem("jwt", data.token);
           dispatch(loginUser(data.user));
           return true;
         }
@@ -23,6 +22,7 @@ export const loginPostFetch = (user) => {
   return (dispatch) => {
     return fetch("http://localhost:3001/api/users/login", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -32,7 +32,6 @@ export const loginPostFetch = (user) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.token) {
-          localStorage.setItem("jwt", data.token);
           dispatch(loginUser(data.user));
         }
       });
@@ -41,24 +40,20 @@ export const loginPostFetch = (user) => {
 
 export const authPostFetch = () => {
   return (dispatch) => {
-    const token = localStorage.jwt;
-    return (
-      token &&
-      fetch("http://localhost:3001/api/users/auth", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data._id) {
-            dispatch(loginUser(data));
-            return true;
-          }
-        })
-    );
+    return fetch("http://localhost:3001/api/users/auth", {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data._id) {
+          dispatch(loginUser(data));
+          return true;
+        }
+      });
   };
 };
 

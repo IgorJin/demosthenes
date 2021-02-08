@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 const LoginPage = ({handleSubmit}) => {
-    const [username, setUsername] = useState('i_zubenko2012@yandex.ru')
-    const [password, setPassword] = useState('12345')
+    const [username, setUsername] = useState('i.zubenko2012@yandex.ru')
+    const [password, setPassword] = useState('11111')
 
     return (
         <form>

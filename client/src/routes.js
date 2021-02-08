@@ -1,7 +1,7 @@
 import Dashboard from './components/Dashboard/Dashboard'
-import Room from './components/Room/Room'
-import Contacts from './components/Contacts/Contacts'
-import Settings from './components/Settings'
+import Room from './components/Dashboard/Room/Room'
+import Contacts from './components/Dashboard/Contacts/Contacts'
+import Settings from './components/Dashboard/Settings'
 
 export default [
     {
