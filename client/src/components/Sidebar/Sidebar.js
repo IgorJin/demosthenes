@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
-import Dashboard from "../../images/dashboard/dashboard.svg";
+import  {ReactComponent as Dashboard} from "../../images/dashboard/dashboard.svg";
 import Meetings from "../../images/dashboard/meetings.svg";
 import Contacts from "../../images/dashboard/contacts.svg";
 import Settings from "../../images/dashboard/comments.svg";
@@ -33,7 +33,7 @@ const Sidebar = ({ userInfo }) => {
         <ul className="sidebar__links">
           <li>
             <Link to="/" className={`${pathName == "" ? "active" : ""}`}>
-              <Meetings />
+              {/* <Meetings /> */}
               <span className="sidebar__hide">Meetings</span>
             </Link>
           </li>
@@ -51,7 +51,7 @@ const Sidebar = ({ userInfo }) => {
               to="/contacts"
               className={`${pathName == "contacts" ? "active" : ""}`}
             >
-              <Contacts />
+              {/* <Contacts /> */}
               <span className="sidebar__hide">Contacts</span>
             </Link>
           </li>
@@ -60,7 +60,7 @@ const Sidebar = ({ userInfo }) => {
               to="/settings"
               className={`${pathName == "settings" ? "active" : ""}`}
             >
-              <Settings />
+              {/* <Settings /> */}
               <span className="sidebar__hide">Settings</span>
             </Link>
           </li>

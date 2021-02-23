@@ -1,7 +1,28 @@
 {
-    "apiPrefix": "http://localhost:3001/api",
-    "port": "3001",
-    "db": "mongodb+srv://Igor:Igor@cluster0-g81fj.mongodb.net/test?retryWrites=true&w=majority",
-    "signature" : "Подпись для токена",
-    "tokenKey" : "Ключ токена"
+  "apiPrefix": "http://localhost:3001/api",
+  "port": "3001",
+  "db": "mongodb+srv://Igor:Igor@cluster0-g81fj.mongodb.net/test?retryWrites=true&w=majority",
+  "signature": "Подпись для токена",
+  "tokenKey": "Ключ токена",
+  "FIREBASE_APPLICATION_CREDENTIALS": {
+    "type": "service_account",
+    "project_id": "demosthenes-project",
+    "private_key_id": "585d1af3e17343ad336be6a154dd0f35677d76d6",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1ostCYECKL/UY\n115JPl7/shxOWXR2URrVe4VtVLecEQbLNGmZ5jLhycs4zd0PeXvxkF3uSKoIaUaW\nl51OdiZoTgMQ+PpJUWWc9Y7HphexPZyWq8p8zMwl/tqJYzEbSR0KmfwS6TR740Ml\n/qG+SKtCt1mCadiLCIdS+g1FBnc6EuxFwVjslTKQed4h7KNy0U5BufkGVhPQcJ1T\n0E2+q8cHyUI5dOU5Ydkc2/mqB1+41N/PKxXg2EimrNlehsLU8V0GcIC8Mk7RgnI7\nuLSN+AMXlf/HVMit2xm53JXO7Hl9ZndGrMUofAVfvqRtfAkcz6d8icHiRkzo6ISM\neW4bEt4hAgMBAAECggEABbElEP6urxXrJpzjK8TsWbN1byAfBfErN9rv1roDqfyf\nm6EYGRZNbGV0PKK45Xn/YBXP176Hs41HBMOaDqIluHmPX4oJ39/Q4R8R2yBRmECP\nxmn6RbhuQleO9iS5XntHUXR7YYVU23gG++sTmwCwez3/LFbQTiUVhoxm+42FEXkG\nUPVRCshiYF912WGxUiCCr1i7nn1F+WGflh10gi0DHZHdG4tgYt3Tl5oFAxMOWunp\nGqPAjzShNbc/QMj9UY5Bq/pyWDJC4qA/3vlr6Rlg9oZt2LiZo15EpPRPA1iC/xdD\n4Wr9lZJAEjFrQ98ncVnKxg6wIG/dxgsUN64U/6cs0QKBgQDdQPhp6dECiug92DOS\nH+HL5314+dq1k0//Z1GjmOKcx2K3jxJSdQZih5PkY7VpWm+v5kA13LhbUq60PT56\nY54u03xLGqpZzcBMVbs8t53WnJGrY1PBbpt/n9X6yNlRvU1h4mDfOR6kmc6aLNe9\nUGwyUILFLG+1anod7LZvp4T8GQKBgQDSKRKaDKdvl6XapNY94K8Gt6v5BmsrDPgc\nEjI9H/SxpHdI9I3F781t/cFqbhsv/fICIDe6aIG5vgNSZ7XmVmQiu64lqG+b52o1\nM9QpNjQF6dAmAIo5JGXmLDsGY/bhH5QV5hK+8WkzuCJHe1Sy8hjW0qhyxPvt6zTv\nlQkeVR4zSQKBgHGcDvKzsTNRCHfZMIH0BQmi0HbyNS/PeOB4uR78PkCq0THYMVxN\n4v1tCK/Z0ylJ2tfDr2z47WFXT4YVfKNzy6HXzpbyFk8Oq5OG4iIHVvEAbHxJAJTu\nqsIZ3NJtl8m1HqsIhx2YQvfaUpAwPodjaGtdlAiTDLlm91WuWu9yYYLhAoGAS5OZ\nrOyAChFvA4HjybzTNIc4wQUd5Q107CNfDbxAMuICQ6oukc/7AGMQ+0U9YbThIwKT\nB+YtQK6kYy4IrBzFRfhYWBKKkHZYK2nIEkn7y2SaBhCLpKECRBQD5fhs/+hrSLTE\naQZH3uGI8kvX2cJWTGrVSPCt6JF9J+tgrBfQFIECgYEAlSoMZ5o0OQMehUGty4jO\nclekp4joLmJUb8KJQ7MIEcjg/ED6pDKcGcoNI9PoALVSkwl7LWdrFHBi3hKf1kjb\nsMz5GKh+YjpgB2Mq8yFAnjkszDH777YXoFLHy9/OSBDgqfGwl5IMKvxSwR4+jJNV\nKE198StbS9BWqYYpkPW6h8M=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-go2xc@demosthenes-project.iam.gserviceaccount.com",
+    "client_id": "104147828797409148165",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-go2xc%40demosthenes-project.iam.gserviceaccount.com"
+  },
+  "FIREBASE_WEB_CONFIG": {
+    "apiKey": "AIzaSyDw5zkFY2gIP4U7UJwqEy-DUcdVtclOVTI",
+    "authDomain": "demosthenes-project.firebaseapp.com",
+    "projectId": "demosthenes-project",
+    "storageBucket": "demosthenes-project.appspot.com",
+    "messagingSenderId": "554814698180",
+    "appId": "1:554814698180:web:9d36c2140a7608cfd54f91"
+  },
+  "FIREBASE_DATABASE_URL": "https://demosthenes-project-default-rtdb.europe-west1.firebasedatabase.app/"
 }

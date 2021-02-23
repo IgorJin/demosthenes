@@ -49,7 +49,7 @@ export const authPostFetch = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data._id) {
+        if (data && data._id) {
           dispatch(loginUser(data));
           return true;
         }
@@ -87,6 +87,46 @@ export const allMeetingsFetch = (id) => {
       .then((data) => {
         console.log(data);
         dispatch(meetings(data));
+      });
+  };
+};
+
+export const registerWithGoogleFetch = (data) => {
+  return (dispatch) => {
+    return fetch(`http://localhost:3001/api/users/register-google`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ data }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          dispatch(loginUser(data.user));
+        }
+      });
+  };
+};
+
+export const loginWithGoogleFetch = (data) => {
+  return (dispatch) => {
+    return fetch(`http://localhost:3001/api/users/login-google`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ data }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token) {
+          dispatch(loginUser(data.user));
+        }
       });
   };
 };

@@ -1,13 +1,12 @@
-const IUser = require("../../../models/IUser");
+const Users = require("../../../controllers/internal/users");
 const IMeeting = require("../../../models/IMeeting");
 
 async function join(io, socket, data) {
   console.log("join");
   const { room, currentUser } = data;
   socket.join(room);
-  user = await IUser.findById(currentUser);
-  user.socket = socket.id;
-  // await user.save();
+  const user = await Users.findById(currentUser);
+  await Users.setSocket({id: user.id, socketId: socket.id});
   const meeting = await IMeeting.findById(room);
   //if (meeting.host._id != currentUser) {
   await IMeeting.addUser(room, socket.id);

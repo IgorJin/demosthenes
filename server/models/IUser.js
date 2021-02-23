@@ -2,9 +2,8 @@ const mongoose = require("mongoose");
 const config = require("../../etc/config.json");
 const crypto = require("crypto");
 const tokenKey = config.tokenKey;
-const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const UserSchema = mongoose.Schema({
   displayName: String,
   username: String,
   email: {
@@ -15,6 +14,7 @@ const UserSchema = new Schema({
   passwordHash: String,
   token: String,
   socket: String,
+  googleId: String,
 });
 
 UserSchema.methods.generateToken = async function () {
@@ -32,22 +32,4 @@ UserSchema.methods.generateToken = async function () {
   return token;
 };
 
-UserSchema.statics.findByCredentials = async (email, password) => {
-  const user = await IUser.findOne({ email });
-  if (!user) {
-    throw new Error({ error: "Invalid login credentials" });
-  }
-  if (password != user.passwordHash) {
-    throw new Error({ error: "Invalid password credentials" });
-  }
-  return user;
-};
-
-UserSchema.statics.findById = async (id) => {
-  let u = await IUser.findOne({ _id: id });
-  return u;
-};
-
-const IUser = mongoose.model("User", UserSchema);
-
-module.exports = IUser;
+module.exports = mongoose.model("User", UserSchema);

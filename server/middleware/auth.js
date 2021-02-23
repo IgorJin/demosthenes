@@ -1,4 +1,4 @@
-const IUser = require("../models/IUser");
+const Users = require("../controllers/internal/users");
 const config = require("../../etc/config.json");
 const crypto = require("crypto");
 
@@ -17,12 +17,13 @@ const auth = async (req, res, next) => {
         userId = JSON.parse(
           Buffer.from(tokenParts[1], "base64").toString("utf8")
         );
-        req.user = await IUser.findById(userId);
+        req.user = await Users.findById({ id: userId });
         next();
       } else {
         throw new Error();
       }
     } catch (e) {
+      console.log("auth -> e", e);
       res.status(401).send({ error: "Not authorized to access this resource" });
     }
   }

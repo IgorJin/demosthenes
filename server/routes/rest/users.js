@@ -5,7 +5,8 @@ const router = express.Router()
 
 router.get('/auth', auth, usersController.authUser);
 router.post('/', usersController.addUser);
+router.post('/register-google', usersController.registerGoogleUser);
+router.post('/login-google', usersController.loginGoogleUser);
 router.post('/login', usersController.loginIn);
-router.get('/allusers', usersController.all);
 
 module.exports = router;
