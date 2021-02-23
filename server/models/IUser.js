@@ -14,6 +14,7 @@ const UserSchema = mongoose.Schema({
   passwordHash: String,
   token: String,
   socket: String,
+  googleId: String,
 });
 
 UserSchema.methods.generateToken = async function () {

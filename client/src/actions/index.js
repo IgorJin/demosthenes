@@ -93,7 +93,7 @@ export const allMeetingsFetch = (id) => {
 
 export const registerWithGoogleFetch = (data) => {
   return (dispatch) => {
-    return fetch(`http://localhost:3001/api/users/google`, {
+    return fetch(`http://localhost:3001/api/users/register-google`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -113,7 +113,7 @@ export const registerWithGoogleFetch = (data) => {
 
 export const loginWithGoogleFetch = (data) => {
   return (dispatch) => {
-    return fetch(`http://localhost:3001/api/users/google`, {
+    return fetch(`http://localhost:3001/api/users/login-google`, {
       method: "POST",
       credentials: "include",
       headers: {

@@ -10,6 +10,7 @@ import {
   authPostFetch,
   loginPostFetch,
   registerWithGoogleFetch,
+  loginWithGoogleFetch,
 } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
@@ -68,7 +69,11 @@ const CabinetLoginPage = ({
       token = await firebase.auth().currentUser?.getIdToken();
     }
     if (token) {
-      const response = registerWithGoogleFetch({ token })(dispatch);
+      if (isReg) {
+        const response = registerWithGoogleFetch({ token })(dispatch);
+      } else {
+        const response = loginWithGoogleFetch({ token })(dispatch);
+      }
     }
   }, [dispatch]);
 
@@ -78,7 +83,10 @@ const CabinetLoginPage = ({
       <div className="auth_page__form">
         {!isReg ? (
           <Fragment>
-            <LoginPage handleSubmit={LoginSubmit} />
+            <LoginPage
+              handleSubmit={LoginSubmit}
+              handleClickGoogle={handleClickGoogle}
+            />
             <span
               className="auth_page__form__link"
               onClick={() => setIsReg(true)}

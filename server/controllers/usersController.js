@@ -43,10 +43,29 @@ async function loginIn(req, res) {
   }
 }
 
-async function addGoogleUser(req, res) {
+async function registerGoogleUser(req, res) {
   try {
-    const { name, email } = await Firebase.verifyIdToken(req.body.data.token);
-    const user = await Users.addUser({ name, email });
+    const { name, email, user_id } = await Firebase.verifyIdToken(req.body.data.token);
+    const user = await Users.addUser({ name, email, googleId: user_id });
+    const token = await user.generateToken();
+    res.cookie("authcookie", token, {
+      maxAge: 900000,
+      httpOnly: true,
+      sameSite: "strict",
+    });
+    res.status(200).json({
+      user,
+      token,
+    });
+  } catch (e) {
+    res.status(400).send(e);
+  }
+}
+
+async function loginGoogleUser(req, res) {
+  try {
+    const { name, email, user_id } = await Firebase.verifyIdToken(req.body.data.token);
+    const user = await Users.findByCredentials({ name, email });
     const token = await user.generateToken();
     res.cookie("authcookie", token, {
       maxAge: 900000,
@@ -66,5 +85,6 @@ module.exports = {
   addUser,
   authUser,
   loginIn,
-  addGoogleUser,
+  registerGoogleUser,
+  loginGoogleUser,
 };
