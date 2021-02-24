@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://igorjin.github.io/personal_cabinet/",
+  "homepage": "https://igorjin.github.io/demosthenes/",
   "dependencies": {
     "@firebase/auth-types": "^0.10.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -21,6 +21,7 @@
     "babel-plugin-inline-react-svg": "^1.1.2",
     "classnames": "^2.2.6",
     "firebase": "^8.2.6",
+    "gh-pages": "^3.1.0",
     "lodash": "^4.17.20",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
@@ -31,6 +32,7 @@
     "react-vis": "^1.11.7",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "save-dev": "0.0.1-security",
     "simple-peer": "^9.7.2",
     "socket.io-client": "^2.3.0",
     "typescript": "^4.1.3",
@@ -42,7 +44,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
