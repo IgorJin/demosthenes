@@ -77,33 +77,38 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    li {
+    display: flex;
+    flex-direction: column;
+
+    a {
       font-weight: 500;
       font-size: 13px;
       line-height: 19px;
       letter-spacing: 0.01em;
+      text-decoration: none;
+      color: $dark_blue;
+      display: flex;
+      align-items: center;
+      height: 80px;
+      margin-bottom: 20px;
+      background-color:white;
+
+      &.active {
+        span {
+          color: $blue;
+        }
+      }
+      span {
+        padding-left: 30px;
+      }
+
       &:not(:last-child) {
         padding-bottom: 20px;
       }
-      a {
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 19px;
-        letter-spacing: 0.01em;
-        text-decoration: none;
-        color: $dark_blue;
-
-        &.active {
-          span {
-            color: $blue;
-          }
-        }
-        span {
-          vertical-align: super;
-          padding-left: 14px;
-          position: absolute;
-        }
-      }
+    }
+    svg {
+      width: 30px;
+      height: 30px;
     }
   }
   &__footer {

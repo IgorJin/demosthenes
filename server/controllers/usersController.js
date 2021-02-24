@@ -39,6 +39,7 @@ async function loginIn(req, res) {
       token,
     });
   } catch (e) {
+    console.log("loginIn -> e", e)
     res.status(400).send(e);
   }
 }
