@@ -21,7 +21,7 @@ async function findByCredentials(email, password) {
   if (!user) {
     throw new Error({ error: "Invalid login credentials" });
   }
-  if (!googleId && password && password != user.passwordHash) { //TODO: хэшировать пароль, условие в отдельную функцию, возвращающую 
+  if (user.googleId && password && password != user.passwordHash) { //TODO: хэшировать пароль, условие в отдельную функцию, возвращающую 
     throw new Error({ error: "Invalid password credentials" });
   }
   return user;
