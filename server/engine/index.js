@@ -10,7 +10,7 @@ const app = express();
 const server = require("http").createServer(app);
 
 const setupGlobals = async () => {
-  global.config = await readConfig();
+  global.config = config;
   initFirebase();
 };
 
