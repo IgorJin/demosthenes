@@ -26,15 +26,10 @@ function applyPreRequestMiddlewares(app) {
   app.use(cookieParser());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  //app.use(expressRequestLogger);
   app.use("/health", (req, res) => {
     res.status(200).send({});
   });
 }
-
-// function applyPostRequestMiddlewares(app) {
-//   app.use(expressErrorLogger);
-// }
 
 function registerApplicationEndpoints(app) {
   registerRoomsRouter(app);

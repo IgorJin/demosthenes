@@ -9,6 +9,8 @@ import {
 import { connect } from 'react-redux'
 
 import Sidebar from './components/Sidebar/Sidebar';
+import Content from './components/Content';
+
 import CabinetLoginPage from './components/CabinetLoginPage';
 import Meeting from './meeting';
 import routes from './routes'
@@ -33,15 +35,15 @@ const App: FunctionComponent<Props> = (props) => {
   }, [isLoginIn])
 
   const isMeeting = useRouteMatch('/meeting');
-
+  //TODO create Content component
   return (
     <div className='App'>
-      {isMeeting && <Meeting />}
-      {showAuthForm && pageIsLoaded ? <CabinetLoginPage /> : undefined}
+      {isMeeting ? <Meeting /> : undefined}
+      {/* {showAuthForm && pageIsLoaded ? <CabinetLoginPage /> : undefined} */}
       <main className='main'>
         <Sidebar />
-        <div className='content'>
-          {!isLoginIn && <Redirect to="/" />}
+        {!isLoginIn && <Redirect to="/" />}
+        <Content>
           <Switch>
             {routes.map((route, index) => (
               <Route
@@ -52,7 +54,9 @@ const App: FunctionComponent<Props> = (props) => {
               />
             ))}
           </Switch>
-        </div>
+        </Content>
+
+
       </main>
     </div>
   );
