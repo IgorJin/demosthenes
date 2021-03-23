@@ -44,18 +44,9 @@ const Sidebar = (props) => {
   return (
     <div className="sidebar">
       <div className="sidebar__top">
-        <h1>Demosthenes</h1>
+        <div>Demosthenes</div>
       </div>
       <div className="sidebar__inner">
-        {/* <div className="sidebar__avatar">
-          <div className="avatar--sidebar-profile">
-            <Avatar size="large" />
-          </div>
-          <div className="sidebar__avatar__info sidebar__hide">
-            <p className="name">{userInfo.displayName}</p>
-            <p className="email">{userInfo.email}</p>
-          </div>
-        </div> */}
         <div className="sidebar__links">
           {dashboardLinks.map((link) => (
             <Link

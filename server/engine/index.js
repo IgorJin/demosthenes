@@ -1,7 +1,8 @@
 const express = require("express");
 const db = require("../db");
 const runHTTPServer = require("./http").runServer;
-const config = require("../../etc/config.json");
+const etcConfig = require("../../etc/config.json");
+const config = require("common").config;
 const runSocketServer = require("./sockets").runServer;
 const initFirebase = require("../firebase").init;
 
@@ -9,9 +10,7 @@ const app = express();
 const server = require("http").createServer(app);
 
 const setupGlobals = async () => {
-  // global.config = await readConfig();
-  // global.logger = defaultLogger;
-  // global.HTTPStatus = HTTPStatus;
+  global.config = await readConfig();
   initFirebase();
 };
 
@@ -19,7 +18,7 @@ async function runServer() {
   db.setUpConnection();
   //await runMigrations();
 
-  const port = config.port;
+  const port = etcConfig.port;
   runHTTPServer(app);
   runSocketServer(server);
 
