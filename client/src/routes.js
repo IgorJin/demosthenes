@@ -1,25 +1,23 @@
-import Dashboard from './components/Dashboard/Dashboard'
-import Room from './components/Dashboard/Room/Room'
-import Contacts from './components/Dashboard/Contacts/Contacts'
-import Settings from './components/Dashboard/Settings'
+import Workspace from './containers/Dashboard/Workspace/Workspace'
+import Events from './containers/Dashboard/Events/Events'
+import Contacts from './containers/Dashboard/Contacts/Contacts'
+import Settings from './containers/Dashboard/Settings'
 
 export default [
     {
-      path: "/",
-      exact: true,
-      main: Room,
+      path: "/dashboard/events",
+      main: Events,
     },
     {
-      path: "/dashboard",
-      exact: true,
-      main: Dashboard,
+      path: "/dashboard/workspace",
+      main: Workspace,
     },
     {
-      path: "/contacts",
+      path: "/dashboard/contacts",
       main: Contacts,
     },
     {
-      path: "/settings",
+      path: "/dashboard/settings",
       main: Settings,
     },
   ]

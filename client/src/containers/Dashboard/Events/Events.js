@@ -1,17 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import RoomButton from "./RoomButton";
-import Header from "../../Header";
+import Header from "../../../components/Header";
 import Block from "../block";
 import { meetingFetch, allMeetingsFetch } from "../../../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAll } from "../../../lib/events";
 import "./index.scss";
 
-const Room = ({ comeInMeeting, user, allMeetings }) => {
+const Events = ({ comeInMeeting, user }) => {
+  const [events, setEvents] = useState([]);
+  console.log("Events -> events", events)
+
   useEffect(() => {
-    if (user._id) allMeetings(user._id);
-  }, [user._id]);
-  return (
+    (async function () {
+      const { result, error } = await getAll();
+      if (!error) {
+        setEvents(result.data.events);
+      }
+    })();
+  }, []);
+
+  return ( 
     <>
       <Block type="main-half">
         <div className="room__inner__item__head">
@@ -31,15 +41,17 @@ const Room = ({ comeInMeeting, user, allMeetings }) => {
         </div>
 
         <div className="room__inner__item__body">
-          {user.meetings &&
-            user.meetings.map((meeting, idx) => (
+          {events.length ? (
+            events.map((event, idx) => (
               <div key={idx}>
-                {" "}
-                <Link to={`/meeting/${meeting.id}/${user._id}`}>
-                  {meeting.title}; by {meeting.host.displayName}
+                <Link to={`/e/${event.id}`}>
+                  {event.title}; by {event.host.displayName}
                 </Link>
               </div>
-            ))}
+            ))
+          ) : (
+            <div>No one meetings</div>
+          )}
         </div>
       </Block>
 
@@ -63,4 +75,4 @@ const mapDispatchToProps = (dispatch) => ({
   comeInMeeting: (uId) => dispatch(meetingFetch(uId)),
   allMeetings: (uId) => dispatch(allMeetingsFetch(uId)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Events);

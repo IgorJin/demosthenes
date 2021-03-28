@@ -1,7 +1,7 @@
 import React from "react";
-import ActionButton from "../../ActionButton";
-import Select from "../../Select";
-import Table from "../../Table";
+import ActionButton from "../../../components/ActionButton";
+import Select from "../../../components/Select";
+import Table from "../../../components/Table";
 import lisa from "./lisa.svg";
 
 const Contacts = () => {

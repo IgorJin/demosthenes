@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useContext, useState } from "react";
 import Block from "../../Dashboard/block";
-import Avatar from "../../Avatar"
+import Avatar from "../../../components/Avatar"
 // import cn from "classnames"; @types/classnames
 import "../index.scss"
 

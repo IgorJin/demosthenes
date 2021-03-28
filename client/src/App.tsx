@@ -8,13 +8,15 @@ import {
 } from "react-router-dom";
 import { connect } from 'react-redux'
 
-import Sidebar from './components/Sidebar/Sidebar';
-import Content from './components/Content';
+import Dashboard from './containers/Dashboard';
 
-import CabinetLoginPage from './components/CabinetLoginPage';
-import Meeting from './meeting';
+import CabinetLoginPage from './containers/CabinetLoginPage';
+import EventPage from './pages/event-page';
 import routes from './routes'
-const cn = require('classnames');
+import { Provider as SocketProvider } from "./lib/context/socket"
+import { Provider as VideoProvider } from "./lib/context/video"
+
+import cn from 'classnames';
 
 interface Props {
   isLoginIn: boolean;
@@ -24,7 +26,6 @@ const App: FunctionComponent<Props> = (props) => {
   const { isLoginIn } = props;
   const [showAuthForm, setShowAuthForm] = useState(false);
   const [pageIsLoaded, setPageIsLoaded] = useState(false);
-  console.log("pageIsLoaded", pageIsLoaded, showAuthForm)
 
   useEffect(() => {
     setPageIsLoaded(true);
@@ -34,30 +35,36 @@ const App: FunctionComponent<Props> = (props) => {
     setShowAuthForm(!isLoginIn);
   }, [isLoginIn])
 
-  const isMeeting = useRouteMatch('/meeting');
-  //TODO create Content component
+  const checkAuth = () => showAuthForm ? <Redirect to="/login" /> : <Redirect to="/dashboard/events" />
+
   return (
     <div className='App'>
-      {isMeeting ? <Meeting /> : undefined}
-      {/* {showAuthForm && pageIsLoaded ? <CabinetLoginPage /> : undefined} */}
-      <main className='main'>
-        <Sidebar />
-        {!isLoginIn && <Redirect to="/" />}
-        <Content>
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                children={<route.main />}
-              />
-            ))}
-          </Switch>
-        </Content>
-
-
-      </main>
+      <Switch>
+        <Route exact path="/">
+          {checkAuth()}
+        </Route>
+        <Route path="/e/:eventId">
+          <SocketProvider>
+            <VideoProvider>
+              <EventPage />
+            </VideoProvider>
+          </SocketProvider>
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard>
+            <Switch>
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  children={<route.main />}
+                />
+              ))}
+            </Switch>
+          </Dashboard>
+        </Route>
+        <Route path="/login"><CabinetLoginPage /></Route>
+      </Switch>
     </div>
   );
 }

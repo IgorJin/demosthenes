@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const apiPrefix = process.env.API_PREFIX || "/api/v1";
+import { apiPrefix } from "../../config.json";
 
 const get = async (url: string, data?: any, params?: any) => {
   return await sendRequest("get", data, url, params);
@@ -21,7 +20,7 @@ const sendRequest = async (
   params: any
 ) => {
   try {
-    const fullPath = `${baseUrl}${apiPrefix}${url}`;
+    const fullPath = `${apiPrefix}${url}`; //TODO separate "baseUrl" var and "apiPrefix"
     //@ts-ignore
     const dataField = method === "get" ? "params" : "data";
     //@ts-ignore

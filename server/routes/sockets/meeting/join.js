@@ -1,25 +1,28 @@
-const Users = require("../../../controllers/internal/users");
-const IMeeting = require("../../../models/IMeeting");
+const IEvent = require("../../../models/IEvent");
+const Participants = require("../../../controllers/internal/participants");
 
 async function join(io, socket, data) {
-  console.log("join");
-  const { room, currentUser } = data;
-  socket.join(room);
-  const user = await Users.findById(currentUser);
-  await Users.setSocket({id: user.id, socketId: socket.id});
-  const meeting = await IMeeting.findById(room);
-  //if (meeting.host._id != currentUser) {
-  await IMeeting.addUser(room, socket.id);
-  //}
-  const meetingUsers = await IMeeting.getUsers(room);
-  if (meetingUsers.sockets.length > 1) {
-    io.to(room).emit("NEW_USER", {
-      user: "admin",
-      newUser: user,
-      meeting,
-      meetingUsers,
-      message: `Welcome to Room #${room}, ${user.displayName}`,
-    });
+  try {
+    const { eventId, userId } = data;
+    const event = IEvent.findById(eventId);
+    if (!event) {
+      throw Error("Can't find event");
+    }
+    const participant = await Participants.create({ socket, event, userId });
+
+    const currentParticipantsState = await Participants.getState(event);
+    console.log("join -> currentParticipantsState", currentParticipantsState)
+    if (currentParticipantsState.length > 1) {
+      io.to(room).emit("NEW_USER", {
+        user: "admin",
+        newUser: userId,
+        participant: currentParticipantsState,
+        event,
+        message: `Welcome to Room #${event.title}, ${user?.displayName}`, //TODO guest can put name
+      });
+    }
+  } catch (e) {
+    console.error(e);
   }
 }
 
