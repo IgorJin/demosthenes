@@ -151,7 +151,7 @@ export const Provider: FunctionComponent = (props) => {
     handleSetSockets(socket.id);
 
     socket.on("NEW_USER", async (data: any) => {
-      console.log("NEW_USER");
+      console.log("NEW_USER");//TODO deleted meetingUsers
       handleSetSockets(data.meetingUsers.sockets);
       const otherUser = data.meetingUsers.sockets.find((s: any) => s !== socket.id)
       setOtherUser(otherUser);

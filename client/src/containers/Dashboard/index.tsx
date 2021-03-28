@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useContext, useState } from "react";
 import MainHeader from './MainHeader';
-// import cn from "classnames"; @types/classnames
+import Sidebar from '../Sidebar/Sidebar';
+import cn from "classnames";
 import "./index.scss";
 
 
@@ -12,13 +13,15 @@ const Content: FunctionComponent<Props> = (props) => {
   const {children} = props;
 
   return (
+    <main className='main'>
+    <Sidebar />   
     <div className='content'>
       <MainHeader />
-
       <div className="content-wrapper">
         {children}
       </div>
     </div>
+    </main>
   );
 }
 

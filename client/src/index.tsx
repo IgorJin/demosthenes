@@ -7,8 +7,6 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
-import { Provider as SocketProvider } from "./lib/context/socket"
-import { Provider as VideoProvider } from "./lib/context/video"
 
 const store = createStore(
   rootReducer,
@@ -20,13 +18,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <SocketProvider>
-      <VideoProvider>
-        <Router>
-          <App />
-        </Router>
-      </VideoProvider>
-    </SocketProvider>
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

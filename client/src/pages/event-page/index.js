@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import "webrtc-adapter";
-import { useRouteMatch } from "react-router-dom";
-import { Context as VideoContext } from "../lib/context/video";
-import { Context as SocketContext } from "../lib/context/socket";
+import { useRouteMatch, useParams } from "react-router-dom";
+import { Context as VideoContext } from "../../lib/context/video";
+import { Context as SocketContext } from "../../lib/context/socket";
 
-import { setMeetingInfo } from "../actions";
+import { setMeetingInfo } from "../../actions";
 import { connect } from "react-redux";
 import "./meeting.scss";
 
 const Meeting = ({ meeting, setMeetingInfo }) => {
-  let room = useRouteMatch("/meeting/:id/:userId").params.id;
+  let { eventId } = useParams();
+  console.log("Meeting -> eventId", eventId)
+  let room = useRouteMatch("/e/:id/:userId").params.id;
   let currentUser = useRouteMatch("/meeting/:id/:userId").params.userId;
   const [isShowRightbar, setisShowRightbar] = useState(false);
 
@@ -35,7 +37,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
     if (socket) {
       initWrapper();
 
-      socket.emit("meeting:join", { room, currentUser }, (error) => {
+      socket.emit("meeting:join", { eventId, currentUser }, (error) => {
         if (error) {
           alert(error);
         }
@@ -51,7 +53,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
   useEffect(() => {
     if (userVideo && userVideo.current && speakerVideo) {
       userVideo.current.srcObject = speakerVideo.localStream;
-      console.log("userVideo.current.srcObject", userVideo.current.srcObject)
+      console.log("userVideo.current.srcObject", userVideo.current.srcObject);
 
       var playPromise = userVideo.current.play();
       if (playPromise !== undefined) {
@@ -70,7 +72,7 @@ const Meeting = ({ meeting, setMeetingInfo }) => {
 
   const handleStartRecVideo = () => {
     recipientVideo.current.play();
-  }
+  };
 
   return (
     <div className="webinar-app">

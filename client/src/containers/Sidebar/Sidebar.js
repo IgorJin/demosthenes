@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Avatar from "../Avatar";
 import { ReactComponent as Dashboard } from "../../images/dashboard/dashboard.svg";
 import { ReactComponent as Meetings } from "../../images/dashboard/meetings.svg";
 import { ReactComponent as Contacts } from "../../images/dashboard/contacts.svg";
@@ -11,23 +10,23 @@ import cn from "classnames";
 
 const dashboardLinks = [
   {
-    title: "Meetings",
-    path: "",
+    title: "Events",
+    path: "dashboard/events",
     icon: <Meetings />,
   },
   {
-    title: "Dashboard",
-    path: "dashboard",
+    title: "Workspace",
+    path: "dashboard/workspace",
     icon: <Dashboard />,
   },
   {
     title: "Contacts",
-    path: "contacts",
+    path: "dashboard/contacts",
     icon: <Contacts />,
   },
   {
     title: "Settings",
-    path: "settings",
+    path: "dashboard/settings",
     icon: <Settings />,
   },
 ];
