@@ -5,12 +5,12 @@ import Block from "../block";
 import { meetingFetch, allMeetingsFetch } from "../../../actions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAll } from "../../../lib/events";
+import { getAll, createEvent } from "../../../lib/events";
 import "./index.scss";
 
 const Events = ({ comeInMeeting, user }) => {
   const [events, setEvents] = useState([]);
-  console.log("Events -> events", events)
+  console.log("Events -> events", events);
 
   useEffect(() => {
     (async function () {
@@ -21,7 +21,12 @@ const Events = ({ comeInMeeting, user }) => {
     })();
   }, []);
 
-  return ( 
+  const handleCreateEvent = async () => {
+    const newEvent = await createEvent(title, hostId);//TODO add auth context
+    setEvents(prev => [...prev, newEvent]);
+  };
+
+  return (
     <>
       <Block type="main-half">
         <div className="room__inner__item__head">
@@ -35,7 +40,7 @@ const Events = ({ comeInMeeting, user }) => {
               </RoomButton>
             </Link>
 
-            <RoomButton color={"green"}>Запланировать вебинар</RoomButton>
+            <RoomButton color={"green"} onClick={handleCreateEvent}>Запланировать вебинар</RoomButton>
           </div>
           <Header>Новые</Header>
         </div>
