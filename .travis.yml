@@ -10,9 +10,10 @@ branches:
 
 deploy:
   provider: heroku
-  app: "demosthenes"
+  skip_cleanup: true
+  app: demosthenes
   api_key:
-    secure: "cf320afd-c5fd-496e-a96b-bb7e7dd052d7"
+    secure: cf320afd-c5fd-496e-a96b-bb7e7dd052d7
 
 script:
     - echo "Hello World"
