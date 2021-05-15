@@ -7,6 +7,12 @@ node_js:
 branches:
   only:
     - master
-  
+
+deploy:
+  provider: heroku
+  app: "demosthenes"
+  api_key:
+    secure: "cf320afd-c5fd-496e-a96b-bb7e7dd052d7"
+
 script:
     - echo "Hello World"
