@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "firebase-admin": "^9.4.2",
+    "firebase-admin": "^11.4.1",
     "helmet": "^4.2.0",
     "mongoose": "^5.9.20",
     "nodemon": "^2.0.6",
